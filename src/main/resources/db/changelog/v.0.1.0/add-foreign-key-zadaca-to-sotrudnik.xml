@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+    <changeSet id="add-foreign-key-zadaca-to-sotrudnik" author="Svetlana">
+
+        <addForeignKeyConstraint baseTableName="zadaca_sotrudnik"
+                                 baseColumnNames="zadaca_id"
+                                 constraintName="fk_zadaca_sotrudnik_to_zadaca"
+                                 referencedTableName="zadaca"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="zadaca_sotrudnik"
+                                 baseColumnNames="sotrudnik_id"
+                                 constraintName="fk_zadaca_sotrudnik_to_sotrudnik"
+                                 referencedTableName="sotrudnik"
+                                 referencedColumnNames="id"/>
+
+    </changeSet>
+
+</databaseChangeLog>
