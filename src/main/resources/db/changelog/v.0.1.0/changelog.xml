@@ -12,6 +12,8 @@
     <include file="create-table-proekt.xml" relativeToChangelogFile="true"/>
     <include file="create-table-zadaca.xml" relativeToChangelogFile="true"/>
     <include file="create-table-zadaca-sotrudnik.xml" relativeToChangelogFile="true"/>
-    <include file="create-table-zadaca-to-sotrudnik.xml" relativeToChangelogFile="true"/>
+    <include file="add-foreign-key-proekt-to-sotrudnik.xml" relativeToChangelogFile="true"/>
+    <include file="add-foreign-key-zadaca-to-sotrudnik.xml" relativeToChangelogFile="true"/>
+    <include file="add-foreign-key-zadaca-proekt.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>
