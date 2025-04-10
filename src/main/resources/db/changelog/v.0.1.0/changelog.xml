@@ -11,5 +11,7 @@
     <include file="create-table-sotrudnik.xml" relativeToChangelogFile="true"/>
     <include file="create-table-proekt.xml" relativeToChangelogFile="true"/>
     <include file="create-table-zadaca.xml" relativeToChangelogFile="true"/>
+    <include file="create-table-zadaca-sotrudnik.xml" relativeToChangelogFile="true"/>
+    <include file="create-table-zadaca-to-sotrudnik.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>
