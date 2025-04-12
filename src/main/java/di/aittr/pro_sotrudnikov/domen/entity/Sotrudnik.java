@@ -1,10 +1,19 @@
 package di.aittr.pro_sotrudnikov.domen.entity;
 
+import jakarta.persistence.*;
+
 import java.util.Objects;
 
+@Entity
+@Table(name = "sotrudnik")
 public class Sotrudnik {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+
+    @Column(name = "imya")
     private String imya;
 
     public Sotrudnik() {

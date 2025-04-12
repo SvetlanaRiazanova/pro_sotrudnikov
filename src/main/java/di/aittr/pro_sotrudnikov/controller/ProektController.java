@@ -1,6 +1,7 @@
 package di.aittr.pro_sotrudnikov.controller;
 
 import di.aittr.pro_sotrudnikov.domen.entity.Proekt;
+import di.aittr.pro_sotrudnikov.servise.interfaces.ProektServise;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -8,6 +9,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/proekti")
 public class ProektController {
+
+    public final ProektServise servise;
+
+    public ProektController(ProektServise servise) {
+        this.servise = servise;
+    }
 
     //REST API:
     //создать проект в БД
@@ -30,29 +37,34 @@ public class ProektController {
 
     @PostMapping
     public Proekt sozdat(@RequestBody Proekt proekt) {
-        return null;
+        return servise.sozdat(proekt);
     }
 
     @GetMapping
     public List<Proekt> procitatVseh() {
-        return null;
+        return procitatVseh();
     }
 
     @GetMapping("/id")
     public Proekt procitatPoId(@PathVariable Long id) {
-        return null;
+        return procitatPoId(id);
     }
 
     @PutMapping
     public void obnovitPoId(@RequestBody Proekt proekt) {
+        servise.obnovitPoId(proekt);
 
     }
+
     @DeleteMapping("/id")
-    public void udalitPoId(@PathVariable Long id){
+    public void udalitPoId(@PathVariable Long id) {
+        servise.udalitPoId(id);
 
     }
+
     @DeleteMapping("/by-nazvanie/{nazvanie}")
-    public void udalitPoNazvaniyu(@PathVariable String nazvanie){
+    public void udalitPoNazvaniyu(@PathVariable String nazvanie) {
+        servise.udalitPoNazvaniyu(nazvanie);
 
     }
 
