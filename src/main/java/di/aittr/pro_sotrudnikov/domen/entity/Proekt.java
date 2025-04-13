@@ -2,8 +2,7 @@ package di.aittr.pro_sotrudnikov.domen.entity;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "proekt")
@@ -20,12 +19,10 @@ public class Proekt {
     @Column(name = "opisanie")
     private String opisanie;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "proekt_id")
+    @OneToMany(mappedBy = "proekt", cascade = CascadeType.ALL)
+    private List<Zadaca> spisokZadac = new ArrayList<>();
 
-    private List<Zadaca> spisokZadac;
-
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "sotrudnik_id")
     private Sotrudnik avtorProekta;
 
