@@ -3,6 +3,7 @@ package di.aittr.pro_sotrudnikov.servise.mapping;
 import di.aittr.pro_sotrudnikov.domen.entity.Zadaca;
 import di.aittr.pro_sotrudnikov.repozitory.ZadacaRepozitory;
 import di.aittr.pro_sotrudnikov.servise.interfaces.ZadacaServise;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,6 +32,7 @@ public class ZadacaServiseImpl implements ZadacaServise {
         return repozitory.findById(id).orElse(null);
     }
 
+    @Transactional
     @Override
     public void obnovitPoId(Zadaca zadaca) {
         Long id = zadaca.getId();
@@ -47,7 +49,7 @@ public class ZadacaServiseImpl implements ZadacaServise {
 
     @Override
     public void udalitPoNazvaniyu(String nazvanie) {
-        repozitory.deleteByName(nazvanie);
+        repozitory.deleteByNazvanie(nazvanie);
 
     }
 }

@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ProektRepozitory extends JpaRepository<Proekt, Long> {
 
-    void deleteByName(String nazvanie);
+    void deleteByNazvanie(String nazvanie);
 }

@@ -24,12 +24,12 @@ public class Zadaca {
     @JoinTable(
             name = "zadaca_sotrudnik",
             joinColumns = @JoinColumn(name = "zadaca_id"),
-            inverseJoinColumns = @JoinColumn(name = "proekt_id")
+            inverseJoinColumns = @JoinColumn(name = "sotrudnik_id")
     )
     private List<Sotrudnik> spisokSotrudnikov;
 
-    @OneToOne
-    @JoinColumn(name = "sotrudnik_id")
+    @ManyToOne
+    @JoinColumn(name = "proekt_id")
     private Proekt proekt;
 
     public Zadaca() {

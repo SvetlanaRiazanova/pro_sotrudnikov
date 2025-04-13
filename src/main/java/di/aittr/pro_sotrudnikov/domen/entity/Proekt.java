@@ -20,15 +20,12 @@ public class Proekt {
     @Column(name = "opisanie")
     private String opisanie;
 
-    @ManyToMany
-    @JoinTable(
-            name = "zadaca_sotrudnik",
-            joinColumns = @JoinColumn(name = "zadaca_id"),
-            inverseJoinColumns = @JoinColumn(name = "sotrudnik_id")
-    )
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "proekt_id")
+
     private List<Zadaca> spisokZadac;
 
-    @OneToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "sotrudnik_id")
     private Sotrudnik avtorProekta;
 

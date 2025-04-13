@@ -3,6 +3,7 @@ package di.aittr.pro_sotrudnikov.servise.mapping;
 import di.aittr.pro_sotrudnikov.domen.entity.Sotrudnik;
 import di.aittr.pro_sotrudnikov.repozitory.SotrudnikRepozitory;
 import di.aittr.pro_sotrudnikov.servise.interfaces.SotrudnikServise;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,6 +32,7 @@ public class SotrudnikServiseImpl implements SotrudnikServise {
         return repozitory.findById(id).orElse(null);
     }
 
+    @Transactional
     @Override
     public void obnovitPoId(Sotrudnik sotrudnik) {
         Long id = sotrudnik.getId();
@@ -47,7 +49,7 @@ public class SotrudnikServiseImpl implements SotrudnikServise {
 
     @Override
     public void udalitPoImeni(String imya) {
-        repozitory.deleteByName(imya);
+        repozitory.deleteByImya(imya);
 
     }
 }
