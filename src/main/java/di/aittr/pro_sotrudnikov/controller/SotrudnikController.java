@@ -1,6 +1,7 @@
 package di.aittr.pro_sotrudnikov.controller;
 
 import di.aittr.pro_sotrudnikov.domen.entity.Sotrudnik;
+import di.aittr.pro_sotrudnikov.servise.interfaces.SotrudnikServise;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -8,6 +9,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/sotrudniki")
 public class SotrudnikController {
+
+    private final SotrudnikServise servise;
+
+    public SotrudnikController(SotrudnikServise servise) {
+        this.servise = servise;
+    }
+
 
     //REST API:
     //создать сотрудника в БД
@@ -30,29 +38,32 @@ public class SotrudnikController {
 
     @PostMapping
     public Sotrudnik sozdat(@RequestBody Sotrudnik sotrudnik) {
-        return null;
+        return servise.sozdat(sotrudnik);
     }
 
     @GetMapping
     public List<Sotrudnik> procitatVseh() {
-        return null;
+        return servise.procitatVseh();
     }
 
-    @GetMapping("/id")
+    @GetMapping("/{id}")
     public Sotrudnik procitatPoId(@PathVariable Long id) {
-        return null;
+        return servise.procitatPoId(id);
     }
 
     @PutMapping
     public void obnovitPoId(@RequestBody Sotrudnik sotrudnik) {
+        servise.obnovitPoId(sotrudnik);
 
     }
-    @DeleteMapping("/id")
+    @DeleteMapping("/{id}")
     public void udalitPoId(@PathVariable Long id){
+        servise.udalitPoId(id);
 
     }
     @DeleteMapping("/by-imya/{imya}")
     public void udalitPoImeni(@PathVariable String imya){
+        servise.udalitPoImeni(imya);
 
     }
 

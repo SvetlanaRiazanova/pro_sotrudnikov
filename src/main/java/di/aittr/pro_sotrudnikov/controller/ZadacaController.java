@@ -1,7 +1,7 @@
 package di.aittr.pro_sotrudnikov.controller;
 
-import di.aittr.pro_sotrudnikov.domen.entity.Sotrudnik;
 import di.aittr.pro_sotrudnikov.domen.entity.Zadaca;
+import di.aittr.pro_sotrudnikov.servise.interfaces.ZadacaServise;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,6 +9,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/zadaci")
 public class ZadacaController {
+
+    private final ZadacaServise servise;
+
+    public ZadacaController(ZadacaServise servise) {
+        this.servise = servise;
+    }
 
     //REST API:
     //создать задачу в БД
@@ -31,29 +37,32 @@ public class ZadacaController {
 
     @PostMapping
     public Zadaca sozdat(@RequestBody Zadaca zadaca) {
-        return null;
+        return servise.sozdat(zadaca);
     }
 
     @GetMapping
     public List<Zadaca> procitatVseh() {
-        return null;
+        return servise.procitatVseh();
     }
 
-    @GetMapping("/id")
+    @GetMapping("/{id}")
     public Zadaca procitatPoId(@PathVariable Long id) {
-        return null;
+        return servise.procitatPoId(id);
     }
 
     @PutMapping
     public void obnovitPoId(@RequestBody Zadaca zadaca) {
+        servise.obnovitPoId(zadaca);
 
     }
-    @DeleteMapping("/id")
+    @DeleteMapping("/{id}")
     public void udalitPoId(@PathVariable Long id){
+        servise.udalitPoId(id);
 
     }
     @DeleteMapping("/by-nazvanie/{nazvanie}")
     public void udalitPoNazvaniyu(@PathVariable String nazvanie){
+        servise.udalitPoNazvaniyu(nazvanie);
 
     }
 

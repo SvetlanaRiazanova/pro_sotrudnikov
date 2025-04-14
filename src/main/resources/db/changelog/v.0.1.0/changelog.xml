@@ -15,5 +15,6 @@
     <include file="add-foreign-key-proekt-to-sotrudnik.xml" relativeToChangelogFile="true"/>
     <include file="add-foreign-key-zadaca-to-sotrudnik.xml" relativeToChangelogFile="true"/>
     <include file="add-foreign-key-zadaca-proekt.xml" relativeToChangelogFile="true"/>
+    <include file="remove-zadaca-constraint.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

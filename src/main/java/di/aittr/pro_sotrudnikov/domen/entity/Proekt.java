@@ -1,14 +1,29 @@
 package di.aittr.pro_sotrudnikov.domen.entity;
 
-import java.util.List;
-import java.util.Objects;
+import jakarta.persistence.*;
 
+import java.util.*;
+
+@Entity
+@Table(name = "proekt")
 public class Proekt {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+
+    @Column(name = "nazvanie")
     private String nazvanie;
+
+    @Column(name = "opisanie")
     private String opisanie;
-    private List<Zadaca> spisokZadac;
+
+    @OneToMany(mappedBy = "proekt", cascade = CascadeType.ALL)
+    private List<Zadaca> spisokZadac = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "sotrudnik_id")
     private Sotrudnik avtorProekta;
 
     public Proekt() {
