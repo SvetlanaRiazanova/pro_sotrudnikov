@@ -3,6 +3,7 @@ package di.aittr.pro_sotrudnikov.servise.mapping;
 import di.aittr.pro_sotrudnikov.domen.entity.Proekt;
 import di.aittr.pro_sotrudnikov.repozitory.ProektRepozitory;
 import di.aittr.pro_sotrudnikov.servise.interfaces.ProektServise;
+import di.aittr.pro_sotrudnikov.servise.interfaces.SotrudnikServise;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -12,13 +13,17 @@ import java.util.List;
 public class ProektServiseImpl implements ProektServise {
 
     public final ProektRepozitory repozitory;
+    public final SotrudnikServise sotrudnikServise;
 
-    public ProektServiseImpl(ProektRepozitory repozitory) {
+    public ProektServiseImpl(ProektRepozitory repozitory, SotrudnikServise sotrudnikServise) {
         this.repozitory = repozitory;
+        this.sotrudnikServise = sotrudnikServise;
     }
 
+    @Transactional
     @Override
     public Proekt sozdat(Proekt proekt) {
+        proekt.setAvtorProekta(sotrudnikServise.procitatPoId(3L));
         return repozitory.save(proekt);
     }
 
@@ -47,6 +52,7 @@ public class ProektServiseImpl implements ProektServise {
 
     }
 
+    @Transactional
     @Override
     public void udalitPoNazvaniyu(String nazvanie) {
         repozitory.deleteByNazvanie(nazvanie);

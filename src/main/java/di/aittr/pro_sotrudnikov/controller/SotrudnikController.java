@@ -46,7 +46,7 @@ public class SotrudnikController {
         return servise.procitatVseh();
     }
 
-    @GetMapping("/id")
+    @GetMapping("/{id}")
     public Sotrudnik procitatPoId(@PathVariable Long id) {
         return servise.procitatPoId(id);
     }
@@ -56,7 +56,7 @@ public class SotrudnikController {
         servise.obnovitPoId(sotrudnik);
 
     }
-    @DeleteMapping("/id")
+    @DeleteMapping("/{id}")
     public void udalitPoId(@PathVariable Long id){
         servise.udalitPoId(id);
 

@@ -47,6 +47,7 @@ public class ZadacaServiseImpl implements ZadacaServise {
 
     }
 
+    @Transactional
     @Override
     public void udalitPoNazvaniyu(String nazvanie) {
         repozitory.deleteByNazvanie(nazvanie);

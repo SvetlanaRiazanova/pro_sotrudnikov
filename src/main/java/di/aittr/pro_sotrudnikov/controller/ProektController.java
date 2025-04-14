@@ -42,12 +42,12 @@ public class ProektController {
 
     @GetMapping
     public List<Proekt> procitatVseh() {
-        return procitatVseh();
+        return servise.procitatVseh();
     }
 
-    @GetMapping("/id")
+    @GetMapping("/{id}")
     public Proekt procitatPoId(@PathVariable Long id) {
-        return procitatPoId(id);
+        return servise.procitatPoId(id);
     }
 
     @PutMapping
@@ -56,7 +56,7 @@ public class ProektController {
 
     }
 
-    @DeleteMapping("/id")
+    @DeleteMapping("/{id}")
     public void udalitPoId(@PathVariable Long id) {
         servise.udalitPoId(id);
 

@@ -13,7 +13,7 @@ public class Sotrudnik {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "imya")
+    @Column(name = "imia")
     private String imya;
 
     public Sotrudnik() {

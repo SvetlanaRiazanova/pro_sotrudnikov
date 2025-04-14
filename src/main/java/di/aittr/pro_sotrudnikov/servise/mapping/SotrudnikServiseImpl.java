@@ -47,6 +47,7 @@ public class SotrudnikServiseImpl implements SotrudnikServise {
 
     }
 
+    @Transactional
     @Override
     public void udalitPoImeni(String imya) {
         repozitory.deleteByImya(imya);
