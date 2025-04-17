@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+    <changeSet id="add-foreign-key-role-to-sotrudnik" author="Svetlana">
+
+        <addForeignKeyConstraint baseTableName="role_sotrudnik"
+                                 baseColumnNames="role_id"
+                                 constraintName="fk_role_sotrudnik_to_role"
+                                 referencedTableName="role"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="role_sotrudnik"
+                                 baseColumnNames="sotrudnik_id"
+                                 constraintName="fk_role_sotrudnik_to_sotrudnik"
+                                 referencedTableName="sotrudnik"
+                                 referencedColumnNames="id"/>
+
+    </changeSet>
+
+</databaseChangeLog>

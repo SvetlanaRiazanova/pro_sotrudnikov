@@ -4,12 +4,15 @@ import di.aittr.pro_sotrudnikov.domen.entity.Sotrudnik;
 import di.aittr.pro_sotrudnikov.repozitory.SotrudnikRepozitory;
 import di.aittr.pro_sotrudnikov.servise.interfaces.SotrudnikServise;
 import jakarta.transaction.Transactional;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class SotrudnikServiseImpl implements SotrudnikServise {
+public class SotrudnikServiseImpl implements SotrudnikServise, UserDetailsService {
 
     private final SotrudnikRepozitory repozitory;
 
@@ -52,5 +55,12 @@ public class SotrudnikServiseImpl implements SotrudnikServise {
     public void udalitPoImeni(String imya) {
         repozitory.deleteByImya(imya);
 
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return repozitory.findByUsername(username).orElseThrow(
+                () -> new UsernameNotFoundException("Сотрудник с " + username + " не найден.")
+        );
     }
 }
