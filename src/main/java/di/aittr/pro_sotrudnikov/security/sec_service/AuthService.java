@@ -32,8 +32,8 @@ public class AuthService {
         UserDetails foundUser = sotrudnikServise.loadUserByUsername(usernaim);
 
         if (passwordEncoder.matches(inboundUser.getPassword(), foundUser.getPassword())) {
-            String accessToken = tokenService.generateAccessToken(foundUser);
-            String refreshToken = tokenService.generateRefreshToken(foundUser);
+            String accessToken = tokenService.generateAccessToken((Sotrudnik) foundUser);
+            String refreshToken = tokenService.generateRefreshToken((Sotrudnik) foundUser);
             refreshStorage.put(usernaim, refreshToken);
             return new TokenResponseDto(accessToken, refreshToken);
 
@@ -49,7 +49,7 @@ public class AuthService {
 
         if (faundRefreshTokin != null && faundRefreshTokin.equals(inboundRefreshToken)) {
             UserDetails faundUser = sotrudnikServise.loadUserByUsername(usernaim);
-            String accessToken = tokenService.generateAccessToken(faundUser);
+            String accessToken = tokenService.generateAccessToken((Sotrudnik) faundUser);
             return new TokenResponseDto(accessToken);
 
         } else {

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class SotrudnikServiseImpl implements SotrudnikServise, UserDetailsService {
+public class SotrudnikServiseImpl implements SotrudnikServise {
 
     private final SotrudnikRepozitory repozitory;
 

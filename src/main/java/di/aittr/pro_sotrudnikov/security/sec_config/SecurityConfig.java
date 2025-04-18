@@ -1,5 +1,6 @@
 package di.aittr.pro_sotrudnikov.security.sec_config;
 
+import di.aittr.pro_sotrudnikov.security.sec_filter.TokenFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -17,6 +18,16 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity
 public class SecurityConfig {
 
+    private final String ADMIN_ROLE = "ADMIN";
+    private final String USER_ROLE = "USER";
+    private final String DEVELOPER_ROLE = "DEVELOPER";
+
+    private final TokenFilter filter;
+
+    public SecurityConfig(TokenFilter filter) {
+        this.filter = filter;
+    }
+
     @Bean
     public BCryptPasswordEncoder encoder(){
         return new BCryptPasswordEncoder();
@@ -30,19 +41,33 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(x -> x
-                                .requestMatchers(HttpMethod.GET, "/products/all").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/products/").hasAnyRole(ADMIN_ROLE, USER_ROLE)
-                                .requestMatchers(HttpMethod.POST, "/products").hasRole(ADMIN_ROLE)
+                                .requestMatchers(HttpMethod.POST, "/sotrudniki").hasRole(ADMIN_ROLE)
+                                .requestMatchers(HttpMethod.GET, "/sotrudniki").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/sotrudniki/3").permitAll()
+                                .requestMatchers(HttpMethod.PUT, "/sotrudniki").hasRole(ADMIN_ROLE)
+                                .requestMatchers(HttpMethod.DELETE, "/sotrudniki/3").hasRole(ADMIN_ROLE)
+                                .requestMatchers(HttpMethod.DELETE, "/sotrudniki/by-imya/Vasya").hasRole(ADMIN_ROLE)
+
+                                .requestMatchers(HttpMethod.POST, "/proekti").hasRole(DEVELOPER_ROLE)
+                                .requestMatchers(HttpMethod.GET, "/proekti").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/proekti/3").permitAll()
+                                .requestMatchers(HttpMethod.PUT, "/proekti").hasRole(DEVELOPER_ROLE)
+                                .requestMatchers(HttpMethod.DELETE, "/proekti/3").hasRole(DEVELOPER_ROLE)
+                                .requestMatchers(HttpMethod.DELETE, "/proekti/by-nazvanie/magazin").hasRole(DEVELOPER_ROLE)
+
+                                .requestMatchers(HttpMethod.POST, "/zadaci").hasAnyRole(DEVELOPER_ROLE, USER_ROLE)
+                                .requestMatchers(HttpMethod.GET, "/zadaci").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/zadaci/3").permitAll()
+                                .requestMatchers(HttpMethod.PUT, "/zadaci").hasAnyRole(DEVELOPER_ROLE, USER_ROLE)
+                                .requestMatchers(HttpMethod.DELETE, "/zadaci/3").hasAnyRole(DEVELOPER_ROLE, USER_ROLE)
+                                .requestMatchers(HttpMethod.DELETE, "/zadaci/by-nazvanie/zaklucitDogovor").hasAnyRole(DEVELOPER_ROLE, USER_ROLE)
+
                                 .requestMatchers(HttpMethod.POST, "/auth/login", "/auth/refresh").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/register").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/hello").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/files").hasRole(ADMIN_ROLE)
-                                .requestMatchers(HttpMethod.POST, "/pokupatel").hasRole(ADMIN_ROLE)
-                                .requestMatchers(HttpMethod.PUT, "/pokupatel/**").hasAnyRole(ADMIN_ROLE, USER_ROLE)
+
                                 .anyRequest().authenticated()
 
                 )
-//                .addFilterAfter(filter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(filter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 }

@@ -7,7 +7,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "sotrudnik")
@@ -109,4 +108,8 @@ public class Sotrudnik implements UserDetails {
         return String.format("Сотрудник:  ИД - %d, имя - %s, логин - %s, роли - %s",
                 id, imya, username, roles);
     }
+
+//    public static void main(String[] args){
+//        System.out.println(new BCryptPasswordEncoder().encode("111"));
+
 }
