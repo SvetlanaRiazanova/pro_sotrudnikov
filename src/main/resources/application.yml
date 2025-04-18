@@ -8,3 +8,7 @@ spring:
     password: 1958-Sveta
   liquibase:
     change-log: classpath:db/changelog/changelog-master.xml
+
+key:
+  access: Nn/nt4G8qTSp/RUK4/dF6Ctzqt6FxYurTVm00Lhg1NM=
+  refresh: DsCEECh/FpYfTQWIVALC1SvYGpBCU7L1ED1eL38InJo=

@@ -1,10 +1,11 @@
 package di.aittr.pro_sotrudnikov.servise.interfaces;
 
 import di.aittr.pro_sotrudnikov.domen.entity.Sotrudnik;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
-public interface SotrudnikServise {
+public interface SotrudnikServise extends UserDetailsService {
 
     //    создать сотрудника в БД
     //    прочитать всех сотрудников
