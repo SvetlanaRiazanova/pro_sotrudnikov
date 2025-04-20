@@ -3,6 +3,7 @@ package di.aittr.pro_sotrudnikov.domen.entity;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Collection;
 import java.util.List;
@@ -28,7 +29,7 @@ public class Sotrudnik implements UserDetails {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "role-sotrudnik",
+            name = "role_sotrudnik",
             joinColumns = @JoinColumn(name = "sotrudnik_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
 
@@ -111,5 +112,7 @@ public class Sotrudnik implements UserDetails {
 
 //    public static void main(String[] args){
 //        System.out.println(new BCryptPasswordEncoder().encode("111"));
+//    }
+
 
 }

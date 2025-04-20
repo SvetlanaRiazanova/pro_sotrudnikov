@@ -1,6 +1,7 @@
 package di.aittr.pro_sotrudnikov.security;
 
 import di.aittr.pro_sotrudnikov.domen.entity.Role;
+import di.aittr.pro_sotrudnikov.domen.entity.Sotrudnik;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -14,6 +15,8 @@ public class AuthInfo implements Authentication {
     private boolean authenticated;
     private String username;
     private List<Role> roles;
+
+    Sotrudnik sotrudnik = new Sotrudnik();
 
     public AuthInfo(String username, List<Role> roles) {
         this.username = username;
@@ -34,7 +37,7 @@ public class AuthInfo implements Authentication {
 
     @Override
     public String getName() {
-        return username;
+        return sotrudnik.getImya();
     }
 
     @Override

@@ -13,28 +13,29 @@ public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private String id;
+    private Long id;
 
     @Column(name = "naimenovanie")
     private String naimenovanie;
 
+
     public Role() {
     }
 
-    public Role(String id, String naimenovanie) {
+    public Role(Long id, String naimenovanie) {
         this.id = id;
         this.naimenovanie = naimenovanie;
     }
 
-    public String getId() {
+    public Long getId(long l) {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getNaimenovanie() {
+    public String getNaimenovanie(String user) {
         return naimenovanie;
     }
 
