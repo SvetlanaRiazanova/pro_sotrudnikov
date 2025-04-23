@@ -1,18 +1,18 @@
-package di.aittr.pro_sotrudnikov.servise.mapping;
+package di.aittr.pro_sotrudnikov.servise;
 
+import di.aittr.pro_sotrudnikov.domen.dto.SotrudnikDto;
 import di.aittr.pro_sotrudnikov.domen.entity.Role;
 import di.aittr.pro_sotrudnikov.domen.entity.Sotrudnik;
 import di.aittr.pro_sotrudnikov.repozitory.SotrudnikRepozitory;
 import di.aittr.pro_sotrudnikov.servise.interfaces.SotrudnikServise;
+import di.aittr.pro_sotrudnikov.servise.mapping.SotrudnikMappingSernise;
 import jakarta.transaction.Transactional;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -21,40 +21,48 @@ public class SotrudnikServiseImpl implements SotrudnikServise {
     private final SotrudnikRepozitory repozitory;
     private final BCryptPasswordEncoder encoder;
     private final RoleServiseImpl roleServise;
+    private final SotrudnikMappingSernise mappingSernise;
 
 
-    public SotrudnikServiseImpl(SotrudnikRepozitory repozitory, BCryptPasswordEncoder encoder, RoleServiseImpl roleServise) {
+    public SotrudnikServiseImpl(SotrudnikRepozitory repozitory, BCryptPasswordEncoder encoder, RoleServiseImpl roleServise, SotrudnikMappingSernise mappingSernise) {
         this.repozitory = repozitory;
         this.encoder = encoder;
         this.roleServise = roleServise;
+        this.mappingSernise = mappingSernise;
     }
 
     @Override
     @Transactional
-    public Sotrudnik sozdat(Sotrudnik sotrudnik) {
-        sotrudnik.setPassword(encoder.encode(sotrudnik.getPassword()));
+    public SotrudnikDto sozdat(SotrudnikDto dto) {
+        Sotrudnik entity = mappingSernise.mahDtoToEntity(dto);
+        entity.setPassword(encoder.encode(entity.getPassword()));
         List<Role> list = new ArrayList<>();
         list.add(roleServise.procitatPoNaimenovanie("ROLE_USER"));
-        sotrudnik.setRoles(list);
+        entity.setRoles(list);
+        entity = repozitory.save(entity);
+        return mappingSernise.mapEntityToDto(entity);
 
-        return repozitory.save(sotrudnik);
     }
 
     @Override
-    public List<Sotrudnik> procitatVseh() {
-        return repozitory.findAll();
+    public List<SotrudnikDto> procitatVseh() {
+        return repozitory.findAll()
+                .stream()
+                .map(mappingSernise::mapEntityToDto)
+                .toList();
     }
 
     @Override
-    public Sotrudnik procitatPoId(Long id) {
-        return repozitory.findById(id).orElse(null);
+    public SotrudnikDto procitatPoId(Long id) {
+        Sotrudnik sotrudnik = repozitory.findById(id).orElse(null);
+        return mappingSernise.mapEntityToDto(sotrudnik);
     }
 
     @Transactional
     @Override
-    public void obnovitPoId(Sotrudnik sotrudnik) {
+    public void obnovitPoId(SotrudnikDto sotrudnik) {
         Long id = sotrudnik.getId();
-        Sotrudnik sushestvSotrudnik = procitatPoId(id);
+        SotrudnikDto sushestvSotrudnik = procitatPoId(id);
         sushestvSotrudnik.setImya(sotrudnik.getImya());
 
     }

@@ -1,6 +1,6 @@
 package di.aittr.pro_sotrudnikov.controller;
 
-import di.aittr.pro_sotrudnikov.domen.entity.Zadaca;
+import di.aittr.pro_sotrudnikov.domen.dto.ZadacaDto;
 import di.aittr.pro_sotrudnikov.servise.interfaces.ZadacaServise;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,22 +36,22 @@ public class ZadacaController {
     //DELETE -> http://12.34.56.78:8888/zadaci/by-nazvanie/zaklucitDogovor
 
     @PostMapping
-    public Zadaca sozdat(@RequestBody Zadaca zadaca) {
+    public ZadacaDto sozdat(@RequestBody ZadacaDto zadaca) {
         return servise.sozdat(zadaca);
     }
 
     @GetMapping
-    public List<Zadaca> procitatVseh() {
+    public List<ZadacaDto> procitatVseh() {
         return servise.procitatVseh();
     }
 
     @GetMapping("/{id}")
-    public Zadaca procitatPoId(@PathVariable Long id) {
+    public ZadacaDto procitatPoId(@PathVariable Long id) {
         return servise.procitatPoId(id);
     }
 
     @PutMapping
-    public void obnovitPoId(@RequestBody Zadaca zadaca) {
+    public void obnovitPoId(@RequestBody ZadacaDto zadaca) {
         servise.obnovitPoId(zadaca);
 
     }
