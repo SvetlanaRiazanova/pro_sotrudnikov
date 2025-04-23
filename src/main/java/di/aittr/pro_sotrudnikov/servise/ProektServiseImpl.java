@@ -15,16 +15,21 @@ public class ProektServiseImpl implements ProektServise {
 
     private final ProektRepozitory repozitory;
     private final ProektMappingServise mappingServise;
+    private final SotrudnikServiseImpl sotrudnikServise;
 
 
-    public ProektServiseImpl(ProektRepozitory repozitory, ProektMappingServise mappingServise) {
+    public ProektServiseImpl(ProektRepozitory repozitory, ProektMappingServise mappingServise, SotrudnikServiseImpl sotrudnikServise) {
         this.repozitory = repozitory;
         this.mappingServise = mappingServise;
+        this.sotrudnikServise = sotrudnikServise;
+
+
     }
 
     @Transactional
     @Override
     public ProektDto sozdat(ProektDto dto) {
+        dto.setAvtorProekta(sotrudnikServise.procitatPoId(3L));
         Proekt entity = mappingServise.mahDtoToEntity(dto);
         entity = repozitory.save(entity);
         return mappingServise.mapEntityToDto(entity);
