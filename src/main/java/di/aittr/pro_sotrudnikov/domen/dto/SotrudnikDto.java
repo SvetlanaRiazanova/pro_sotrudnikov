@@ -6,6 +6,15 @@ public class SotrudnikDto {
     private Long id;
     private String imya;
     private String username;
+    private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public Long getId() {
         return id;
@@ -34,13 +43,13 @@ public class SotrudnikDto {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        SotrudnikDto that = (SotrudnikDto) o;
-        return Objects.equals(id, that.id) && Objects.equals(imya, that.imya) && Objects.equals(username, that.username);
+        SotrudnikDto dto = (SotrudnikDto) o;
+        return Objects.equals(id, dto.id) && Objects.equals(imya, dto.imya) && Objects.equals(username, dto.username) && Objects.equals(password, dto.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, imya, username);
+        return Objects.hash(id, imya, username, password);
     }
 
     @Override

@@ -11,6 +11,7 @@ public interface SotrudnikMappingSernise {
     SotrudnikDto mapEntityToDto(Sotrudnik entity);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "password", constant = "hidden")
     Sotrudnik mahDtoToEntity(SotrudnikDto dto);
 
 

@@ -1,9 +1,5 @@
 package di.aittr.pro_sotrudnikov.domen.dto;
 
-import di.aittr.pro_sotrudnikov.domen.entity.Proekt;
-import di.aittr.pro_sotrudnikov.domen.entity.Sotrudnik;
-import jakarta.persistence.*;
-
 import java.util.List;
 import java.util.Objects;
 
@@ -12,8 +8,8 @@ public class ZadacaDto {
     private Long id;
     private String nazvanie;
     private String opisanie;
-    private List<Sotrudnik> spisokSotrudnikov;
-    private Proekt proekt;
+    private List<SotrudnikDto> spisokSotrudnikov;
+    private ProektDto proekt;
 
     public Long getId() {
         return id;
@@ -39,19 +35,19 @@ public class ZadacaDto {
         this.opisanie = opisanie;
     }
 
-    public List<Sotrudnik> getSpisokSotrudnikov() {
+    public List<SotrudnikDto> getSpisokSotrudnikov() {
         return spisokSotrudnikov;
     }
 
-    public void setSpisokSotrudnikov(List<Sotrudnik> spisokSotrudnikov) {
+    public void setSpisokSotrudnikov(List<SotrudnikDto> spisokSotrudnikov) {
         this.spisokSotrudnikov = spisokSotrudnikov;
     }
 
-    public Proekt getProekt() {
+    public ProektDto getProekt() {
         return proekt;
     }
 
-    public void setProekt(Proekt proekt) {
+    public void setProekt(ProektDto proekt) {
         this.proekt = proekt;
     }
 
@@ -66,9 +62,10 @@ public class ZadacaDto {
     public int hashCode() {
         return Objects.hash(id, nazvanie, opisanie, spisokSotrudnikov, proekt);
     }
+
     @Override
     public String toString() {
-        return String.format("Задача ДТО: ИД - %d, название - $s, описание - %s, список сотрудников - %s, проект - %s",
-                id, nazvanie, opisanie, spisokSotrudnikov, proekt);
+        return String.format("Задача ДТО: ИД - %d, название - $s, описание - %s, список сотрудников - %s",
+                id, nazvanie, opisanie, spisokSotrudnikov);
     }
 }

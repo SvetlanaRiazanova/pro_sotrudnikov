@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = SotrudnikMappingSernise.class)
 public interface ZadacaMappingServise {
 
     ZadacaDto mapEntityToDto(Zadaca entity);
