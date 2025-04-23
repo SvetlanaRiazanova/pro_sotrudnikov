@@ -8,10 +8,10 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface SotrudnikMappingSernise {
 
+    @Mapping(target = "password", constant = "hidden")
     SotrudnikDto mapEntityToDto(Sotrudnik entity);
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "password", constant = "hidden")
     Sotrudnik mahDtoToEntity(SotrudnikDto dto);
 
 
