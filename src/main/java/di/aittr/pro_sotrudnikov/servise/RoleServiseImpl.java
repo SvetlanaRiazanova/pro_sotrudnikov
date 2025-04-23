@@ -1,11 +1,9 @@
-package di.aittr.pro_sotrudnikov.servise.mapping;
+package di.aittr.pro_sotrudnikov.servise;
 
 import di.aittr.pro_sotrudnikov.domen.entity.Role;
 import di.aittr.pro_sotrudnikov.repozitory.RoleRepozitory;
 import di.aittr.pro_sotrudnikov.servise.interfaces.RoleServise;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class RoleServiseImpl implements RoleServise {

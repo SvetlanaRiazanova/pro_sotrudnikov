@@ -1,7 +1,8 @@
 package di.aittr.pro_sotrudnikov.controller;
 
-import di.aittr.pro_sotrudnikov.domen.entity.Proekt;
+import di.aittr.pro_sotrudnikov.domen.dto.ProektDto;
 import di.aittr.pro_sotrudnikov.servise.interfaces.ProektServise;
+import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,22 +37,22 @@ public class ProektController {
     //DELETE -> http://12.34.56.78:8888/proekti/by-nazvanie/magazin
 
     @PostMapping
-    public Proekt sozdat(@RequestBody Proekt proekt) {
+    public ProektDto sozdat(@RequestBody ProektDto proekt, @AuthenticationPrincipal String username) {
         return servise.sozdat(proekt);
     }
 
     @GetMapping
-    public List<Proekt> procitatVseh() {
+    public List<ProektDto> procitatVseh() {
         return servise.procitatVseh();
     }
 
     @GetMapping("/{id}")
-    public Proekt procitatPoId(@PathVariable Long id) {
+    public ProektDto procitatPoId(@PathVariable Long id) {
         return servise.procitatPoId(id);
     }
 
     @PutMapping
-    public void obnovitPoId(@RequestBody Proekt proekt) {
+    public void obnovitPoId(@RequestBody ProektDto proekt) {
         servise.obnovitPoId(proekt);
 
     }
