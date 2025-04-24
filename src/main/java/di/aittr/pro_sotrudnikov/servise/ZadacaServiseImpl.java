@@ -63,4 +63,21 @@ public class ZadacaServiseImpl implements ZadacaServise {
         repozitory.deleteByNazvanie(nazvanie);
 
     }
+
+    @Override
+    public void dobavitSotrudnikaVzadacuPoId(Long zadacaId, Long sotrudnikId) {
+        repozitory.findById(sotrudnikId);
+    }
+
+    @Override
+    public void udalitSotrudnikaIzZadaciPoId(Long zadacaId, Long sotrudnikId) {
+        repozitory.deleteById(zadacaId, sotrudnikId);
+
+    }
+
+    @Override
+    public void ocistitZadacuOtSotrudnikov(Long zadacaId) {
+        repozitory.deleteAll();
+
+    }
 }

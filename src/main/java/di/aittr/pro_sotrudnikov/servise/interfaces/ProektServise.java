@@ -12,4 +12,7 @@ public interface ProektServise {
     void obnovitPoId(ProektDto proekt);
     void udalitPoId(Long id);
     void udalitPoNazvaniyu(String nazvanie);
+    void dobavitZadacuVproektPoId(Long proektId,Long zadacaId);
+    void udalitZadacuIzProektaPoId(Long proektId,Long zadacaId);
+    void ocistitProektOtZadac(Long proektId);
 }

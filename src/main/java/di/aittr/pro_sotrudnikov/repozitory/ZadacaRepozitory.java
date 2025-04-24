@@ -6,4 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface ZadacaRepozitory extends JpaRepository<Zadaca, Long> {
 
     void deleteByNazvanie(String nazvanie);
+
+    void deleteById(Long zadacaId, Long sotrudnikId);
 }

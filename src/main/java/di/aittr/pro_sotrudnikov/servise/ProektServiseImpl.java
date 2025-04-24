@@ -70,4 +70,21 @@ public class ProektServiseImpl implements ProektServise {
         repozitory.deleteByNazvanie(nazvanie);
 
     }
+
+    @Override
+    public void dobavitZadacuVproektPoId(Long proektId, Long zadacaId) {
+        repozitory.findById(zadacaId);
+    }
+
+    @Override
+    public void udalitZadacuIzProektaPoId(Long proektId, Long zadacaId) {
+        repozitory.deleteById(proektId, zadacaId);
+
+    }
+
+    @Override
+    public void ocistitProektOtZadac(Long proektId) {
+        repozitory.deleteAll();
+
+    }
 }

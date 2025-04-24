@@ -12,4 +12,7 @@ public interface ZadacaServise {
     void obnovitPoId(ZadacaDto zadaca);
     void udalitPoId(Long id);
     void udalitPoNazvaniyu(String nazvanie);
+    void dobavitSotrudnikaVzadacuPoId(Long zadacaId,Long sotrudnikId);
+    void udalitSotrudnikaIzZadaciPoId(Long zadacaId,Long sotrudnikId);
+    void ocistitZadacuOtSotrudnikov(Long zadacaId);
 }

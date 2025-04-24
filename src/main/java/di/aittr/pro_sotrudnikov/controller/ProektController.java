@@ -36,6 +36,15 @@ public class ProektController {
     //удалить проект по названию
     //DELETE -> http://12.34.56.78:8888/proekti/by-nazvanie/magazin
 
+    //Добавить задачу в проект
+    //PUT -> http://12.34.56.78:8888/proekti/2/add-zadaca/3
+
+    //Удалить задачу из проекта
+    //DELETE -> http://12.34.56.78:8888/proekti/2/delete-zadaca/3
+
+    //Очистить проект от задач
+    //DELETE -> http://12.34.56.78:8888/proekti
+
     @PostMapping
     public ProektDto sozdat(@RequestBody ProektDto proekt, @AuthenticationPrincipal String username) {
         return servise.sozdat(proekt);
@@ -67,6 +76,26 @@ public class ProektController {
     public void udalitPoNazvaniyu(@PathVariable String nazvanie) {
         servise.udalitPoNazvaniyu(nazvanie);
 
+    }
+
+    @PutMapping("/{proektId}/add-zadaca/{zadacaId}")
+    public void dobavitZadacuVproektPoId(
+            @PathVariable Long proektId,
+            @PathVariable Long zadacaId
+    ) {
+        servise.dobavitZadacuVproektPoId(proektId, zadacaId);
+    }
+
+    @DeleteMapping("/{proektId}/delete-zadaca/{zadacaId}")
+    public void udalitZadacuIzProektaPoId(
+            @PathVariable Long proektId,
+            @PathVariable Long zadacaId) {
+        servise.udalitZadacuIzProektaPoId(proektId, zadacaId);
+    }
+
+    @DeleteMapping("/{proektId}")
+    public void ocistitProektOtZadac(@PathVariable Long proektId) {
+        servise.ocistitProektOtZadac(proektId);
     }
 
 }

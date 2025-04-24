@@ -29,7 +29,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public BCryptPasswordEncoder encoder(){
+    public BCryptPasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -41,30 +41,36 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(x -> x
-                                .requestMatchers(HttpMethod.POST, "/sotrudniki").hasRole(ADMIN_ROLE)
-                                .requestMatchers(HttpMethod.GET, "/sotrudniki").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/sotrudniki/{id}").permitAll()
-                                .requestMatchers(HttpMethod.PUT, "/sotrudniki").hasRole(ADMIN_ROLE)
-                                .requestMatchers(HttpMethod.DELETE, "/sotrudniki/{id}").hasRole(ADMIN_ROLE)
-                                .requestMatchers(HttpMethod.DELETE, "/sotrudniki").hasRole(ADMIN_ROLE)
+                        .requestMatchers(HttpMethod.POST, "/sotrudniki").hasRole(ADMIN_ROLE)
+                        .requestMatchers(HttpMethod.GET, "/sotrudniki").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/sotrudniki/{id}").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/sotrudniki").hasRole(ADMIN_ROLE)
+                        .requestMatchers(HttpMethod.DELETE, "/sotrudniki/{id}").hasRole(ADMIN_ROLE)
+                        .requestMatchers(HttpMethod.DELETE, "/sotrudniki").hasRole(ADMIN_ROLE)
 
-                                .requestMatchers(HttpMethod.POST, "/proekti").hasRole(DEVELOPER_ROLE)
-                                .requestMatchers(HttpMethod.GET, "/proekti").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/proekti/{id}").permitAll()
-                                .requestMatchers(HttpMethod.PUT, "/proekti").hasRole(DEVELOPER_ROLE)
-                                .requestMatchers(HttpMethod.DELETE, "/proekti/{id}").hasRole(DEVELOPER_ROLE)
-                                .requestMatchers(HttpMethod.DELETE, "/proekti").hasRole(DEVELOPER_ROLE)
+                        .requestMatchers(HttpMethod.POST, "/proekti").hasRole(DEVELOPER_ROLE)
+                        .requestMatchers(HttpMethod.GET, "/proekti").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/proekti/{id}").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/proekti").hasRole(DEVELOPER_ROLE)
+                        .requestMatchers(HttpMethod.DELETE, "/proekti/{id}").hasRole(DEVELOPER_ROLE)
+                        .requestMatchers(HttpMethod.DELETE, "/proekti").hasRole(DEVELOPER_ROLE)
+                        .requestMatchers(HttpMethod.PUT, "/proekti/").hasAnyRole(DEVELOPER_ROLE, USER_ROLE)
+                        .requestMatchers(HttpMethod.DELETE, "/proekti/{proektId}/").hasAnyRole(DEVELOPER_ROLE, USER_ROLE)
+                        .requestMatchers(HttpMethod.DELETE, "/proekti/{proektId}").hasRole(DEVELOPER_ROLE)
 
-                                .requestMatchers(HttpMethod.POST, "/zadaci").hasAnyRole(DEVELOPER_ROLE, USER_ROLE)
-                                .requestMatchers(HttpMethod.GET, "/zadaci").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/zadaci/{id}").permitAll()
-                                .requestMatchers(HttpMethod.PUT, "/zadaci").hasAnyRole(DEVELOPER_ROLE, USER_ROLE)
-                                .requestMatchers(HttpMethod.DELETE, "/zadaci/{id}").hasAnyRole(DEVELOPER_ROLE, USER_ROLE)
-                                .requestMatchers(HttpMethod.DELETE, "/zadaci").hasAnyRole(DEVELOPER_ROLE, USER_ROLE)
+                        .requestMatchers(HttpMethod.POST, "/zadaci").hasAnyRole(DEVELOPER_ROLE, USER_ROLE)
+                        .requestMatchers(HttpMethod.GET, "/zadaci").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/zadaci/{id}").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/zadaci").hasAnyRole(DEVELOPER_ROLE, USER_ROLE)
+                        .requestMatchers(HttpMethod.DELETE, "/zadaci/{id}").hasAnyRole(DEVELOPER_ROLE, USER_ROLE)
+                        .requestMatchers(HttpMethod.DELETE, "/zadaci").hasAnyRole(DEVELOPER_ROLE, USER_ROLE)
+                        .requestMatchers(HttpMethod.PUT, "/zadaci/").hasRole(ADMIN_ROLE)
+                        .requestMatchers(HttpMethod.DELETE, "/zadaci/{zadaciId}/").hasRole(ADMIN_ROLE)
+                        .requestMatchers(HttpMethod.DELETE, "/zadaci/{zadaciId}").hasRole(ADMIN_ROLE)
 
-                                .requestMatchers(HttpMethod.POST, "/auth/login", "/auth/refresh").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/login", "/auth/refresh").permitAll()
 
-                                .anyRequest().authenticated()
+                        .anyRequest().authenticated()
 
                 )
                 .addFilterAfter(filter, UsernamePasswordAuthenticationFilter.class)
