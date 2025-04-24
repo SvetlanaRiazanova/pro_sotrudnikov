@@ -7,5 +7,4 @@ public interface ProektRepozitory extends JpaRepository<Proekt, Long> {
 
     void deleteByNazvanie(String nazvanie);
 
-    void deleteById(Long proektId, Long zadacaId);
 }

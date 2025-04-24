@@ -89,7 +89,7 @@ public class ZadacaController {
         servise.udalitSotrudnikaIzZadaciPoId(zadacaId,sotrudnikId);
     }
 
-    @DeleteMapping("/{zadacaId}")
+    @DeleteMapping("/{zadacaId}/clear")
     public void ocistitZadacuOtSotrudnikov(@PathVariable Long zadacaId) {
         servise.ocistitZadacuOtSotrudnikov(zadacaId);
     }

@@ -56,7 +56,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/proekti").hasRole(DEVELOPER_ROLE)
                         .requestMatchers(HttpMethod.PUT, "/proekti/").hasAnyRole(DEVELOPER_ROLE, USER_ROLE)
                         .requestMatchers(HttpMethod.DELETE, "/proekti/{proektId}/").hasAnyRole(DEVELOPER_ROLE, USER_ROLE)
-                        .requestMatchers(HttpMethod.DELETE, "/proekti/{proektId}").hasRole(DEVELOPER_ROLE)
+                        .requestMatchers(HttpMethod.DELETE, "/proekti/{proektId}/clear").hasRole(DEVELOPER_ROLE)
 
                         .requestMatchers(HttpMethod.POST, "/zadaci").hasAnyRole(DEVELOPER_ROLE, USER_ROLE)
                         .requestMatchers(HttpMethod.GET, "/zadaci").permitAll()
@@ -66,7 +66,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/zadaci").hasAnyRole(DEVELOPER_ROLE, USER_ROLE)
                         .requestMatchers(HttpMethod.PUT, "/zadaci/").hasRole(ADMIN_ROLE)
                         .requestMatchers(HttpMethod.DELETE, "/zadaci/{zadaciId}/").hasRole(ADMIN_ROLE)
-                        .requestMatchers(HttpMethod.DELETE, "/zadaci/{zadaciId}").hasRole(ADMIN_ROLE)
+                        .requestMatchers(HttpMethod.DELETE, "/zadaci/{zadaciId}/clear").hasRole(ADMIN_ROLE)
 
                         .requestMatchers(HttpMethod.POST, "/auth/login", "/auth/refresh").permitAll()
 

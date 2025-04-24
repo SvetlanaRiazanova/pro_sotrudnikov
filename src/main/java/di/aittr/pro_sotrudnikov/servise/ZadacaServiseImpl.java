@@ -71,7 +71,8 @@ public class ZadacaServiseImpl implements ZadacaServise {
 
     @Override
     public void udalitSotrudnikaIzZadaciPoId(Long zadacaId, Long sotrudnikId) {
-        repozitory.deleteById(zadacaId, sotrudnikId);
+        ZadacaDto zadaca = procitatPoId(zadacaId);
+        zadaca.getSpisokSotrudnikov().removeIf(x-> x.getId().equals(sotrudnikId));
 
     }
 

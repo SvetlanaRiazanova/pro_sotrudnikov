@@ -3,6 +3,7 @@ package di.aittr.pro_sotrudnikov.servise;
 import di.aittr.pro_sotrudnikov.domen.dto.ProektDto;
 import di.aittr.pro_sotrudnikov.domen.entity.Proekt;
 import di.aittr.pro_sotrudnikov.repozitory.ProektRepozitory;
+import di.aittr.pro_sotrudnikov.repozitory.ZadacaRepozitory;
 import di.aittr.pro_sotrudnikov.servise.interfaces.ProektServise;
 import di.aittr.pro_sotrudnikov.servise.mapping.ProektMappingServise;
 import jakarta.transaction.Transactional;
@@ -18,11 +19,11 @@ public class ProektServiseImpl implements ProektServise {
     private final SotrudnikServiseImpl sotrudnikServise;
 
 
-    public ProektServiseImpl(ProektRepozitory repozitory, ProektMappingServise mappingServise, SotrudnikServiseImpl sotrudnikServise) {
+
+    public ProektServiseImpl(ProektRepozitory repozitory, ProektMappingServise mappingServise, SotrudnikServiseImpl sotrudnikServise, ZadacaServiseImpl zadacaServise, ZadacaRepozitory zadacaRepozitory) {
         this.repozitory = repozitory;
         this.mappingServise = mappingServise;
         this.sotrudnikServise = sotrudnikServise;
-
 
     }
 
@@ -76,15 +77,18 @@ public class ProektServiseImpl implements ProektServise {
         repozitory.findById(zadacaId);
     }
 
+    @Transactional
     @Override
     public void udalitZadacuIzProektaPoId(Long proektId, Long zadacaId) {
-        repozitory.deleteById(proektId, zadacaId);
+        ProektDto proekt = procitatPoId(proektId);
+        proekt.getSpisokZadac().removeIf(x-> x.getId().equals(zadacaId));
 
     }
 
-    @Override
-    public void ocistitProektOtZadac(Long proektId) {
-        repozitory.deleteAll();
+        @Override
+        public void ocistitProektOtZadac (Long proektId){
+            repozitory.deleteAll();
 
-    }
+        }
+
 }

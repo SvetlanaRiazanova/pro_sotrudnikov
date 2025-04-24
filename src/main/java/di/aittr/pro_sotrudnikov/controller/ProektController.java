@@ -93,7 +93,7 @@ public class ProektController {
         servise.udalitZadacuIzProektaPoId(proektId, zadacaId);
     }
 
-    @DeleteMapping("/{proektId}")
+    @DeleteMapping("/{proektId}/clear")
     public void ocistitProektOtZadac(@PathVariable Long proektId) {
         servise.ocistitProektOtZadac(proektId);
     }
