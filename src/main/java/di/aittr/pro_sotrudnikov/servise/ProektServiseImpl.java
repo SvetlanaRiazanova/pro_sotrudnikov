@@ -1,16 +1,12 @@
 package di.aittr.pro_sotrudnikov.servise;
 
 import di.aittr.pro_sotrudnikov.domen.dto.ProektDto;
-import di.aittr.pro_sotrudnikov.domen.dto.ZadacaDto;
 import di.aittr.pro_sotrudnikov.domen.entity.Proekt;
-import di.aittr.pro_sotrudnikov.domen.entity.Zadaca;
 import di.aittr.pro_sotrudnikov.repozitory.ProektRepozitory;
-import di.aittr.pro_sotrudnikov.repozitory.ZadacaRepozitory;
 import di.aittr.pro_sotrudnikov.servise.interfaces.ProektServise;
 import di.aittr.pro_sotrudnikov.servise.interfaces.SotrudnikServise;
 import di.aittr.pro_sotrudnikov.servise.interfaces.ZadacaServise;
 import di.aittr.pro_sotrudnikov.servise.mapping.ProektMappingServise;
-import di.aittr.pro_sotrudnikov.servise.mapping.ZadacaMappingServise;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -23,15 +19,15 @@ public class ProektServiseImpl implements ProektServise {
     private final ProektMappingServise mappingServise;
     private final SotrudnikServise sotrudnikServise;
     private final ZadacaServise zadacaServise;
-    private final ZadacaMappingServise zadacaMappingServise;
 
 
-    public ProektServiseImpl(ProektRepozitory repozitory, ProektMappingServise mappingServise, SotrudnikServiseImpl sotrudnikServise, ZadacaServiseImpl zadacaServise, ZadacaRepozitory zadacaRepozitory, ZadacaServise zadacaServise1, ZadacaMappingServise zadacaMappingServise) {
+    public ProektServiseImpl(ProektRepozitory repozitory, ProektMappingServise mappingServise,
+                             SotrudnikServiseImpl sotrudnikServise, ZadacaServise zadacaServise) {
         this.repozitory = repozitory;
         this.mappingServise = mappingServise;
         this.sotrudnikServise = sotrudnikServise;
-        this.zadacaServise = zadacaServise1;
-        this.zadacaMappingServise = zadacaMappingServise;
+        this.zadacaServise = zadacaServise;
+
     }
 
     @Transactional
@@ -79,32 +75,33 @@ public class ProektServiseImpl implements ProektServise {
 
     }
 
+    public Proekt procitatEntityPoId(Long proektId) {
+        ProektDto proektDto = procitatPoId(proektId);
+        return mappingServise.mahDtoToEntity(proektDto);
+
+    }
+
     @Transactional
     @Override
     public void dobavitZadacuVproektPoId(Long proektId, Long zadacaId) {
-        ProektDto proekt = procitatPoId(proektId);
-        Proekt entityProekt = mappingServise.mahDtoToEntity(proekt);
-        ZadacaDto zadaca = zadacaServise.procitatPoId(zadacaId);
-        Zadaca entityZadaca = zadacaMappingServise.mahDtoToEntity(zadaca);
-        entityProekt.getSpisokZadac().add(entityZadaca);
+        Proekt proekt = procitatEntityPoId(proektId);
+        proekt.getSpisokZadac().add(zadacaServise.procitatEntityPoId(zadacaId));
 
     }
 
     @Transactional
     @Override
     public void udalitZadacuIzProektaPoId(Long proektId, Long zadacaId) {
-        ProektDto proekt = procitatPoId(proektId);
-        Proekt entityProekt = mappingServise.mahDtoToEntity(proekt);
-        entityProekt.getSpisokZadac().removeIf(x -> x.getId().equals(zadacaId));
+        Proekt proekt = procitatEntityPoId(proektId);
+        proekt.getSpisokZadac().removeIf(x -> x.getId().equals(zadacaId));
 
     }
 
     @Transactional
     @Override
     public void ocistitProektOtZadac(Long proektId) {
-        ProektDto proekt = procitatPoId(proektId);
-        Proekt entityProekt = mappingServise.mahDtoToEntity(proekt);
-        entityProekt.getSpisokZadac().clear();
+        Proekt proekt = procitatEntityPoId(proektId);
+        proekt.getSpisokZadac().clear();
 
     }
 

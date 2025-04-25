@@ -1,8 +1,10 @@
 package di.aittr.pro_sotrudnikov.servise;
 
 import di.aittr.pro_sotrudnikov.domen.dto.SotrudnikDto;
+import di.aittr.pro_sotrudnikov.domen.dto.ZadacaDto;
 import di.aittr.pro_sotrudnikov.domen.entity.Role;
 import di.aittr.pro_sotrudnikov.domen.entity.Sotrudnik;
+import di.aittr.pro_sotrudnikov.domen.entity.Zadaca;
 import di.aittr.pro_sotrudnikov.repozitory.SotrudnikRepozitory;
 import di.aittr.pro_sotrudnikov.servise.interfaces.SotrudnikServise;
 import di.aittr.pro_sotrudnikov.servise.mapping.SotrudnikMappingSernise;
@@ -85,6 +87,11 @@ public class SotrudnikServiseImpl implements SotrudnikServise {
         return repozitory.findByUsername(username).orElseThrow(
                 () -> new UsernameNotFoundException("Сотрудник с " + username + " не найден.")
         );
+    }
+
+    public Sotrudnik procitatEntityPoId(Long sotrudnikId) {
+        SotrudnikDto sotrudnikDto = procitatPoId(sotrudnikId);
+        return mappingSernise.mahDtoToEntity(sotrudnikDto);
     }
 
 }
