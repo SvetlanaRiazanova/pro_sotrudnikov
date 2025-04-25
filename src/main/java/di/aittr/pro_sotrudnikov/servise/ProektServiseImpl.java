@@ -1,11 +1,16 @@
 package di.aittr.pro_sotrudnikov.servise;
 
 import di.aittr.pro_sotrudnikov.domen.dto.ProektDto;
+import di.aittr.pro_sotrudnikov.domen.dto.ZadacaDto;
 import di.aittr.pro_sotrudnikov.domen.entity.Proekt;
+import di.aittr.pro_sotrudnikov.domen.entity.Zadaca;
 import di.aittr.pro_sotrudnikov.repozitory.ProektRepozitory;
 import di.aittr.pro_sotrudnikov.repozitory.ZadacaRepozitory;
 import di.aittr.pro_sotrudnikov.servise.interfaces.ProektServise;
+import di.aittr.pro_sotrudnikov.servise.interfaces.SotrudnikServise;
+import di.aittr.pro_sotrudnikov.servise.interfaces.ZadacaServise;
 import di.aittr.pro_sotrudnikov.servise.mapping.ProektMappingServise;
+import di.aittr.pro_sotrudnikov.servise.mapping.ZadacaMappingServise;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -16,15 +21,17 @@ public class ProektServiseImpl implements ProektServise {
 
     private final ProektRepozitory repozitory;
     private final ProektMappingServise mappingServise;
-    private final SotrudnikServiseImpl sotrudnikServise;
+    private final SotrudnikServise sotrudnikServise;
+    private final ZadacaServise zadacaServise;
+    private final ZadacaMappingServise zadacaMappingServise;
 
 
-
-    public ProektServiseImpl(ProektRepozitory repozitory, ProektMappingServise mappingServise, SotrudnikServiseImpl sotrudnikServise, ZadacaServiseImpl zadacaServise, ZadacaRepozitory zadacaRepozitory) {
+    public ProektServiseImpl(ProektRepozitory repozitory, ProektMappingServise mappingServise, SotrudnikServiseImpl sotrudnikServise, ZadacaServiseImpl zadacaServise, ZadacaRepozitory zadacaRepozitory, ZadacaServise zadacaServise1, ZadacaMappingServise zadacaMappingServise) {
         this.repozitory = repozitory;
         this.mappingServise = mappingServise;
         this.sotrudnikServise = sotrudnikServise;
-
+        this.zadacaServise = zadacaServise1;
+        this.zadacaMappingServise = zadacaMappingServise;
     }
 
     @Transactional
@@ -72,23 +79,34 @@ public class ProektServiseImpl implements ProektServise {
 
     }
 
+    @Transactional
     @Override
     public void dobavitZadacuVproektPoId(Long proektId, Long zadacaId) {
-        repozitory.findById(zadacaId);
+        ProektDto proekt = procitatPoId(proektId);
+        Proekt entityProekt = mappingServise.mahDtoToEntity(proekt);
+        ZadacaDto zadaca = zadacaServise.procitatPoId(zadacaId);
+        Zadaca entityZadaca = zadacaMappingServise.mahDtoToEntity(zadaca);
+        entityProekt.getSpisokZadac().add(entityZadaca);
+
     }
 
     @Transactional
     @Override
     public void udalitZadacuIzProektaPoId(Long proektId, Long zadacaId) {
         ProektDto proekt = procitatPoId(proektId);
-        proekt.getSpisokZadac().removeIf(x-> x.getId().equals(zadacaId));
+        Proekt entityProekt = mappingServise.mahDtoToEntity(proekt);
+        entityProekt.getSpisokZadac().removeIf(x -> x.getId().equals(zadacaId));
 
     }
 
-        @Override
-        public void ocistitProektOtZadac (Long proektId){
-            repozitory.deleteAll();
+    @Transactional
+    @Override
+    public void ocistitProektOtZadac(Long proektId) {
+        ProektDto proekt = procitatPoId(proektId);
+        Proekt entityProekt = mappingServise.mahDtoToEntity(proekt);
+        entityProekt.getSpisokZadac().clear();
 
-        }
+    }
+
 
 }
