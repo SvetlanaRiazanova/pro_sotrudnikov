@@ -68,9 +68,10 @@ public class ZadacaServiseImpl implements ZadacaServise {
 
     }
 
+    @Override
     public Zadaca procitatEntityPoId(Long zadacaId) {
-        ZadacaDto zadacaDto = procitatPoId(zadacaId);
-        return mappingServise.mahDtoToEntity(zadacaDto);
+        Zadaca zadaca = repozitory.findById(zadacaId).orElse(null);
+        return zadaca;
     }
 
 

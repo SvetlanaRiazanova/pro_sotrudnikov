@@ -1,6 +1,7 @@
 package di.aittr.pro_sotrudnikov.servise.interfaces;
 
 import di.aittr.pro_sotrudnikov.domen.dto.ProektDto;
+import di.aittr.pro_sotrudnikov.domen.entity.Proekt;
 
 import java.util.List;
 
@@ -15,4 +16,5 @@ public interface ProektServise {
     void dobavitZadacuVproektPoId(Long proektId,Long zadacaId);
     void udalitZadacuIzProektaPoId(Long proektId,Long zadacaId);
     void ocistitProektOtZadac(Long proektId);
+    Proekt procitatEntityPoId(Long proektId);
 }

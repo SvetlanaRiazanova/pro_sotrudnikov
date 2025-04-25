@@ -89,9 +89,10 @@ public class SotrudnikServiseImpl implements SotrudnikServise {
         );
     }
 
+    @Override
     public Sotrudnik procitatEntityPoId(Long sotrudnikId) {
-        SotrudnikDto sotrudnikDto = procitatPoId(sotrudnikId);
-        return mappingSernise.mahDtoToEntity(sotrudnikDto);
+        Sotrudnik sotrudnik = repozitory.findById(sotrudnikId).orElse(null);
+        return sotrudnik;
     }
 
 }

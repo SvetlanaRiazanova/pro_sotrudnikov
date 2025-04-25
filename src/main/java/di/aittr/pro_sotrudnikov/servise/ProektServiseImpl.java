@@ -74,10 +74,10 @@ public class ProektServiseImpl implements ProektServise {
         repozitory.deleteByNazvanie(nazvanie);
 
     }
-
+    @Override
     public Proekt procitatEntityPoId(Long proektId) {
-        ProektDto proektDto = procitatPoId(proektId);
-        return mappingServise.mahDtoToEntity(proektDto);
+        Proekt proekt = repozitory.findById(proektId).orElse(null);
+        return proekt;
 
     }
 
