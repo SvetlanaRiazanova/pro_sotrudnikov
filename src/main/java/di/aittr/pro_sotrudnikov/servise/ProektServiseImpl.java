@@ -52,7 +52,7 @@ public class ProektServiseImpl implements ProektServise {
 
     @Override
     public ProektDto procitatPoId(Long id) {
-        Proekt proekt = repozitory.findById(id).orElse(null);
+        Proekt proekt = procitatEntityPoId(id);
         return mappingServise.mapEntityToDto(proekt);
     }
 

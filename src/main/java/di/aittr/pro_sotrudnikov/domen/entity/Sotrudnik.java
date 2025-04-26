@@ -3,7 +3,6 @@ package di.aittr.pro_sotrudnikov.domen.entity;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Collection;
 import java.util.List;
@@ -109,10 +108,5 @@ public class Sotrudnik implements UserDetails {
         return String.format("Сотрудник:  ИД - %d, имя - %s, логин - %s, роли - %s",
                 id, imya, username, roles);
     }
-
-//    public static void main(String[] args){
-//        System.out.println(new BCryptPasswordEncoder().encode("111"));
-//    }
-
 
 }
