@@ -1,10 +1,8 @@
 package di.aittr.pro_sotrudnikov.servise;
 
 import di.aittr.pro_sotrudnikov.domen.dto.SotrudnikDto;
-import di.aittr.pro_sotrudnikov.domen.dto.ZadacaDto;
 import di.aittr.pro_sotrudnikov.domen.entity.Role;
 import di.aittr.pro_sotrudnikov.domen.entity.Sotrudnik;
-import di.aittr.pro_sotrudnikov.domen.entity.Zadaca;
 import di.aittr.pro_sotrudnikov.repozitory.SotrudnikRepozitory;
 import di.aittr.pro_sotrudnikov.servise.interfaces.SotrudnikServise;
 import di.aittr.pro_sotrudnikov.servise.mapping.SotrudnikMappingSernise;
@@ -56,7 +54,7 @@ public class SotrudnikServiseImpl implements SotrudnikServise {
 
     @Override
     public SotrudnikDto procitatPoId(Long id) {
-        Sotrudnik sotrudnik = repozitory.findById(id).orElse(null);
+        Sotrudnik sotrudnik = procitatEntityPoId(id);
         return mappingSernise.mapEntityToDto(sotrudnik);
     }
 

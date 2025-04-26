@@ -97,7 +97,7 @@ public class Zadaca {
 
     @Override
     public String toString() {
-        return String.format("Задача: ИД - %d, название - $s, описание - %s, список сотрудников - %s, проект - %s",
-                id, nazvanie, opisanie, spisokSotrudnikov, proekt);
+        return String.format("Задача: ИД - %d, название - %s, описание - %s, список сотрудников - %s",
+                id, nazvanie, opisanie, spisokSotrudnikov);
     }
 }

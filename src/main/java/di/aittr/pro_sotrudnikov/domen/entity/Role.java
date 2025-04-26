@@ -27,22 +27,6 @@ public class Role implements GrantedAuthority {
         this.naimenovanie = naimenovanie;
     }
 
-    public Long getId(long l) {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNaimenovanie(String user) {
-        return naimenovanie;
-    }
-
-    public void setNaimenovanie(String naimenovanie) {
-        this.naimenovanie = naimenovanie;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
@@ -53,6 +37,22 @@ public class Role implements GrantedAuthority {
     @Override
     public int hashCode() {
         return Objects.hash(id, naimenovanie);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNaimenovanie() {
+        return naimenovanie;
+    }
+
+    public void setNaimenovanie(String naimenovanie) {
+        this.naimenovanie = naimenovanie;
     }
 
     @Override

@@ -66,7 +66,7 @@ public class ProektDto {
 
     @Override
     public String toString() {
-        return String.format("Проект ДТО: ИД - %d, название - $s, описание - %s, список задач - %s, автор проекта - %s",
+        return String.format("Проект ДТО: ИД - %d, название - %s, описание - %s, список задач - %s, автор проекта - %s",
                 id, nazvanie, opisanie, spisokZadac, avtorProekta);
     }
 }

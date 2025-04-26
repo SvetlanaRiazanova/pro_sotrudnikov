@@ -9,7 +9,7 @@ public class ZadacaDto {
     private String nazvanie;
     private String opisanie;
     private List<SotrudnikDto> spisokSotrudnikov;
-    //private ProektDto proekt;
+
 
     public Long getId() {
         return id;
@@ -57,7 +57,7 @@ public class ZadacaDto {
 
     @Override
     public String toString() {
-        return String.format("Задача ДТО: ИД - %d, название - $s, описание - %s, список сотрудников - %s",
+        return String.format("Задача ДТО: ИД - %d, название - %s, описание - %s, список сотрудников - %s",
                 id, nazvanie, opisanie, spisokSotrudnikov);
     }
 }
