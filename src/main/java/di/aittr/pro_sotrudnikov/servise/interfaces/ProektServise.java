@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ProektServise {
 
-    ProektDto sozdat(ProektDto proekt);
+    ProektDto sozdat(ProektDto proekt, String username);
     List<ProektDto> procitatVseh();
     ProektDto procitatPoId(Long id);
     void obnovitPoId(ProektDto proekt);

@@ -47,7 +47,7 @@ public class ProektController {
 
     @PostMapping
     public ProektDto sozdat(@RequestBody ProektDto proekt, @AuthenticationPrincipal String username) {
-        return servise.sozdat(proekt);
+        return servise.sozdat(proekt, username);
     }
 
     @GetMapping

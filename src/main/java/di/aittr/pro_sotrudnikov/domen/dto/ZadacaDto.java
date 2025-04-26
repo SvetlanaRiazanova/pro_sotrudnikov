@@ -9,7 +9,7 @@ public class ZadacaDto {
     private String nazvanie;
     private String opisanie;
     private List<SotrudnikDto> spisokSotrudnikov;
-    private ProektDto proekt;
+    //private ProektDto proekt;
 
     public Long getId() {
         return id;
@@ -43,24 +43,16 @@ public class ZadacaDto {
         this.spisokSotrudnikov = spisokSotrudnikov;
     }
 
-    public ProektDto getProekt() {
-        return proekt;
-    }
-
-    public void setProekt(ProektDto proekt) {
-        this.proekt = proekt;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         ZadacaDto zadacaDto = (ZadacaDto) o;
-        return Objects.equals(id, zadacaDto.id) && Objects.equals(nazvanie, zadacaDto.nazvanie) && Objects.equals(opisanie, zadacaDto.opisanie) && Objects.equals(spisokSotrudnikov, zadacaDto.spisokSotrudnikov) && Objects.equals(proekt, zadacaDto.proekt);
+        return Objects.equals(id, zadacaDto.id) && Objects.equals(nazvanie, zadacaDto.nazvanie) && Objects.equals(opisanie, zadacaDto.opisanie) && Objects.equals(spisokSotrudnikov, zadacaDto.spisokSotrudnikov);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nazvanie, opisanie, spisokSotrudnikov, proekt);
+        return Objects.hash(id, nazvanie, opisanie, spisokSotrudnikov);
     }
 
     @Override

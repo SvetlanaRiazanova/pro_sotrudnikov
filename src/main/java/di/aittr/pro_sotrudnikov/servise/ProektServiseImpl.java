@@ -2,6 +2,8 @@ package di.aittr.pro_sotrudnikov.servise;
 
 import di.aittr.pro_sotrudnikov.domen.dto.ProektDto;
 import di.aittr.pro_sotrudnikov.domen.entity.Proekt;
+import di.aittr.pro_sotrudnikov.domen.entity.Sotrudnik;
+import di.aittr.pro_sotrudnikov.domen.entity.Zadaca;
 import di.aittr.pro_sotrudnikov.repozitory.ProektRepozitory;
 import di.aittr.pro_sotrudnikov.servise.interfaces.ProektServise;
 import di.aittr.pro_sotrudnikov.servise.interfaces.SotrudnikServise;
@@ -28,13 +30,14 @@ public class ProektServiseImpl implements ProektServise {
         this.sotrudnikServise = sotrudnikServise;
         this.zadacaServise = zadacaServise;
 
+
     }
 
     @Transactional
     @Override
-    public ProektDto sozdat(ProektDto dto) {
-        dto.setAvtorProekta(sotrudnikServise.procitatPoId(3L));
+    public ProektDto sozdat(ProektDto dto, String username) {
         Proekt entity = mappingServise.mahDtoToEntity(dto);
+        entity.setAvtorProekta((Sotrudnik) sotrudnikServise.loadUserByUsername(username));
         entity = repozitory.save(entity);
         return mappingServise.mapEntityToDto(entity);
     }
@@ -74,6 +77,7 @@ public class ProektServiseImpl implements ProektServise {
         repozitory.deleteByNazvanie(nazvanie);
 
     }
+
     @Override
     public Proekt procitatEntityPoId(Long proektId) {
         Proekt proekt = repozitory.findById(proektId).orElse(null);
@@ -85,7 +89,9 @@ public class ProektServiseImpl implements ProektServise {
     @Override
     public void dobavitZadacuVproektPoId(Long proektId, Long zadacaId) {
         Proekt proekt = procitatEntityPoId(proektId);
-        proekt.getSpisokZadac().add(zadacaServise.procitatEntityPoId(zadacaId));
+        Zadaca zadaca = zadacaServise.procitatEntityPoId(zadacaId);
+        zadaca.setProekt(proekt);
+        proekt.getSpisokZadac().add(zadaca);
 
     }
 
