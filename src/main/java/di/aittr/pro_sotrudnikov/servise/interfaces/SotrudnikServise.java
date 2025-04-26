@@ -1,6 +1,7 @@
 package di.aittr.pro_sotrudnikov.servise.interfaces;
 
 import di.aittr.pro_sotrudnikov.domen.dto.SotrudnikDto;
+import di.aittr.pro_sotrudnikov.domen.entity.Sotrudnik;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
@@ -20,4 +21,5 @@ public interface SotrudnikServise extends UserDetailsService {
     void obnovitPoId(SotrudnikDto sotrudnik);
     void udalitPoId(Long id);
     void udalitPoImeni(String imya);
+    Sotrudnik procitatEntityPoId(Long sotrudnikId);
 }

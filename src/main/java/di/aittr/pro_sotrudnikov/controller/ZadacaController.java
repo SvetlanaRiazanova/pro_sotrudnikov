@@ -35,6 +35,15 @@ public class ZadacaController {
     //удалить задачу по названию
     //DELETE -> http://12.34.56.78:8888/zadaci/by-nazvanie/zaklucitDogovor
 
+    //Добавить исполнителя в задачу
+    //PUT -> http://12.34.56.78:8888/zadaca/2/add-sotrudnik/3
+
+    //Удалить исполнителя из задачи
+    //DELETE -> http://12.34.56.78:8888/proekti/2/delete-sotrudnik/3
+
+    //Очистить задачу от исполнителей
+    //DELETE -> http://12.34.56.78:8888/zadaca
+
     @PostMapping
     public ZadacaDto sozdat(@RequestBody ZadacaDto zadaca) {
         return servise.sozdat(zadaca);
@@ -64,6 +73,25 @@ public class ZadacaController {
     public void udalitPoNazvaniyu(@PathVariable String nazvanie){
         servise.udalitPoNazvaniyu(nazvanie);
 
+    }
+    @PutMapping("/{zadacaId}/add-sotrudnik/{sotrudnikId}")
+    public void dobavitSotrudnikaVzadacuPoId(
+            @PathVariable Long zadacaId,
+            @PathVariable Long sotrudnikId
+    ) {
+        servise.dobavitSotrudnikaVzadacuPoId(zadacaId,sotrudnikId);
+    }
+
+    @DeleteMapping("/{zadacaId}/delete-sotrudnik/{sotrudnikId}")
+    public void udalitSotrudnikaIzZadaciPoId(
+            @PathVariable Long zadacaId,
+            @PathVariable Long sotrudnikId) {
+        servise.udalitSotrudnikaIzZadaciPoId(zadacaId,sotrudnikId);
+    }
+
+    @DeleteMapping("/{zadacaId}/clear")
+    public void ocistitZadacuOtSotrudnikov(@PathVariable Long zadacaId) {
+        servise.ocistitZadacuOtSotrudnikov(zadacaId);
     }
 
 }

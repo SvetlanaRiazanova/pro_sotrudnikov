@@ -2,8 +2,12 @@ package di.aittr.pro_sotrudnikov.servise;
 
 import di.aittr.pro_sotrudnikov.domen.dto.ProektDto;
 import di.aittr.pro_sotrudnikov.domen.entity.Proekt;
+import di.aittr.pro_sotrudnikov.domen.entity.Sotrudnik;
+import di.aittr.pro_sotrudnikov.domen.entity.Zadaca;
 import di.aittr.pro_sotrudnikov.repozitory.ProektRepozitory;
 import di.aittr.pro_sotrudnikov.servise.interfaces.ProektServise;
+import di.aittr.pro_sotrudnikov.servise.interfaces.SotrudnikServise;
+import di.aittr.pro_sotrudnikov.servise.interfaces.ZadacaServise;
 import di.aittr.pro_sotrudnikov.servise.mapping.ProektMappingServise;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -15,22 +19,25 @@ public class ProektServiseImpl implements ProektServise {
 
     private final ProektRepozitory repozitory;
     private final ProektMappingServise mappingServise;
-    private final SotrudnikServiseImpl sotrudnikServise;
+    private final SotrudnikServise sotrudnikServise;
+    private final ZadacaServise zadacaServise;
 
 
-    public ProektServiseImpl(ProektRepozitory repozitory, ProektMappingServise mappingServise, SotrudnikServiseImpl sotrudnikServise) {
+    public ProektServiseImpl(ProektRepozitory repozitory, ProektMappingServise mappingServise,
+                             SotrudnikServiseImpl sotrudnikServise, ZadacaServise zadacaServise) {
         this.repozitory = repozitory;
         this.mappingServise = mappingServise;
         this.sotrudnikServise = sotrudnikServise;
+        this.zadacaServise = zadacaServise;
 
 
     }
 
     @Transactional
     @Override
-    public ProektDto sozdat(ProektDto dto) {
-        dto.setAvtorProekta(sotrudnikServise.procitatPoId(3L));
+    public ProektDto sozdat(ProektDto dto, String username) {
         Proekt entity = mappingServise.mahDtoToEntity(dto);
+        entity.setAvtorProekta((Sotrudnik) sotrudnikServise.loadUserByUsername(username));
         entity = repozitory.save(entity);
         return mappingServise.mapEntityToDto(entity);
     }
@@ -70,4 +77,39 @@ public class ProektServiseImpl implements ProektServise {
         repozitory.deleteByNazvanie(nazvanie);
 
     }
+
+    @Override
+    public Proekt procitatEntityPoId(Long proektId) {
+        Proekt proekt = repozitory.findById(proektId).orElse(null);
+        return proekt;
+
+    }
+
+    @Transactional
+    @Override
+    public void dobavitZadacuVproektPoId(Long proektId, Long zadacaId) {
+        Proekt proekt = procitatEntityPoId(proektId);
+        Zadaca zadaca = zadacaServise.procitatEntityPoId(zadacaId);
+        zadaca.setProekt(proekt);
+        proekt.getSpisokZadac().add(zadaca);
+
+    }
+
+    @Transactional
+    @Override
+    public void udalitZadacuIzProektaPoId(Long proektId, Long zadacaId) {
+        Proekt proekt = procitatEntityPoId(proektId);
+        proekt.getSpisokZadac().removeIf(x -> x.getId().equals(zadacaId));
+
+    }
+
+    @Transactional
+    @Override
+    public void ocistitProektOtZadac(Long proektId) {
+        Proekt proekt = procitatEntityPoId(proektId);
+        proekt.getSpisokZadac().clear();
+
+    }
+
+
 }

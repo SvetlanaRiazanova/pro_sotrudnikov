@@ -3,6 +3,7 @@ package di.aittr.pro_sotrudnikov.servise;
 import di.aittr.pro_sotrudnikov.domen.dto.ZadacaDto;
 import di.aittr.pro_sotrudnikov.domen.entity.Zadaca;
 import di.aittr.pro_sotrudnikov.repozitory.ZadacaRepozitory;
+import di.aittr.pro_sotrudnikov.servise.interfaces.SotrudnikServise;
 import di.aittr.pro_sotrudnikov.servise.interfaces.ZadacaServise;
 import di.aittr.pro_sotrudnikov.servise.mapping.ZadacaMappingServise;
 import jakarta.transaction.Transactional;
@@ -15,10 +16,13 @@ public class ZadacaServiseImpl implements ZadacaServise {
 
     private final ZadacaRepozitory repozitory;
     private final ZadacaMappingServise mappingServise;
+    private final SotrudnikServise sotrudnikServise;
 
-    public ZadacaServiseImpl(ZadacaRepozitory repozitory, ZadacaMappingServise mappingServise) {
+    public ZadacaServiseImpl(ZadacaRepozitory repozitory, ZadacaMappingServise mappingServise, SotrudnikServise sotrudnikServise) {
         this.repozitory = repozitory;
         this.mappingServise = mappingServise;
+        this.sotrudnikServise = sotrudnikServise;
+
     }
 
     @Override
@@ -61,6 +65,36 @@ public class ZadacaServiseImpl implements ZadacaServise {
     @Override
     public void udalitPoNazvaniyu(String nazvanie) {
         repozitory.deleteByNazvanie(nazvanie);
+
+    }
+
+    @Override
+    public Zadaca procitatEntityPoId(Long zadacaId) {
+        Zadaca zadaca = repozitory.findById(zadacaId).orElse(null);
+        return zadaca;
+    }
+
+
+    @Transactional
+    @Override
+    public void dobavitSotrudnikaVzadacuPoId(Long zadacaId, Long sotrudnikId) {
+        Zadaca zadaca = procitatEntityPoId(zadacaId);
+        zadaca.getSpisokSotrudnikov().add(sotrudnikServise.procitatEntityPoId(sotrudnikId));
+    }
+
+    @Transactional
+    @Override
+    public void udalitSotrudnikaIzZadaciPoId(Long zadacaId, Long sotrudnikId) {
+        Zadaca zadaca = procitatEntityPoId(zadacaId);
+        zadaca.getSpisokSotrudnikov().removeIf(x -> x.getId().equals(sotrudnikId));
+
+    }
+
+    @Transactional
+    @Override
+    public void ocistitZadacuOtSotrudnikov(Long zadacaId) {
+        Zadaca zadaca = procitatEntityPoId(zadacaId);
+        zadaca.getSpisokSotrudnikov().clear();
 
     }
 }
