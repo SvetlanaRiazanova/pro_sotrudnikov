@@ -2,7 +2,8 @@ package di.aittr.pro_sotrudnikov.controller;
 
 import di.aittr.pro_sotrudnikov.domen.dto.ProektDto;
 import di.aittr.pro_sotrudnikov.servise.interfaces.ProektServise;
-import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
+
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
