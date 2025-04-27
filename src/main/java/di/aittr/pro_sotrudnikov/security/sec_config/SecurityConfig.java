@@ -68,6 +68,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/zadaci/{zadaciId}/").hasRole(ADMIN_ROLE)
                         .requestMatchers(HttpMethod.DELETE, "/zadaci/{zadaciId}/clear").hasRole(ADMIN_ROLE)
 
+                        .requestMatchers(HttpMethod.POST, "/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login", "/auth/refresh").permitAll()
 
                         .anyRequest().authenticated()

@@ -26,6 +26,9 @@ public class Sotrudnik implements UserDetails {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "email")
+    private String email;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "role_sotrudnik",
@@ -44,6 +47,14 @@ public class Sotrudnik implements UserDetails {
         this.username = username;
         this.password = password;
         this.roles = roles;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Long getId() {
@@ -95,18 +106,18 @@ public class Sotrudnik implements UserDetails {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Sotrudnik sotrudnik = (Sotrudnik) o;
-        return Objects.equals(id, sotrudnik.id) && Objects.equals(imya, sotrudnik.imya) && Objects.equals(username, sotrudnik.username) && Objects.equals(password, sotrudnik.password) && Objects.equals(roles, sotrudnik.roles);
+        return Objects.equals(id, sotrudnik.id) && Objects.equals(imya, sotrudnik.imya) && Objects.equals(username, sotrudnik.username) && Objects.equals(password, sotrudnik.password) && Objects.equals(email, sotrudnik.email) && Objects.equals(roles, sotrudnik.roles);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, imya, username, password, roles);
+        return Objects.hash(id, imya, username, password, email, roles);
     }
 
     @Override
     public String toString() {
-        return String.format("Сотрудник:  ИД - %d, имя - %s, логин - %s, роли - %s",
-                id, imya, username, roles);
+        return String.format("Сотрудник:  ИД - %d, имя - %s, логин - %s, почта - %s, роли - %s",
+                id, imya, username, email, roles);
     }
 
 }
