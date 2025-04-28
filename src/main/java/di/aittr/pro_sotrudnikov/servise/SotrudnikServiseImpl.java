@@ -4,6 +4,7 @@ import di.aittr.pro_sotrudnikov.domen.dto.SotrudnikDto;
 import di.aittr.pro_sotrudnikov.domen.entity.Role;
 import di.aittr.pro_sotrudnikov.domen.entity.Sotrudnik;
 import di.aittr.pro_sotrudnikov.repozitory.SotrudnikRepozitory;
+import di.aittr.pro_sotrudnikov.servise.interfaces.ConfirmationServise;
 import di.aittr.pro_sotrudnikov.servise.interfaces.EmailServise;
 import di.aittr.pro_sotrudnikov.servise.interfaces.RoleServise;
 import di.aittr.pro_sotrudnikov.servise.interfaces.SotrudnikServise;
@@ -26,14 +27,16 @@ public class SotrudnikServiseImpl implements SotrudnikServise {
     private final RoleServise roleServise;
     private final SotrudnikMappingSernise mappingSernise;
     private final EmailServise emailServise;
+    private final ConfirmationServise confirmationServise;
 
 
-    public SotrudnikServiseImpl(SotrudnikRepozitory repozitory, BCryptPasswordEncoder encoder, RoleServise roleServise, SotrudnikMappingSernise mappingSernise, EmailServise emailServise) {
+    public SotrudnikServiseImpl(SotrudnikRepozitory repozitory, BCryptPasswordEncoder encoder, RoleServise roleServise, SotrudnikMappingSernise mappingSernise, EmailServise emailServise, ConfirmationServise confirmationServise) {
         this.repozitory = repozitory;
         this.encoder = encoder;
         this.roleServise = roleServise;
         this.mappingSernise = mappingSernise;
         this.emailServise = emailServise;
+        this.confirmationServise = confirmationServise;
     }
 
     @Override
@@ -102,12 +105,25 @@ public class SotrudnikServiseImpl implements SotrudnikServise {
     public void register(Sotrudnik sotrudnik) {
         sotrudnik.setId(null);
         sotrudnik.setPassword(encoder.encode(sotrudnik.getPassword()));
+        sotrudnik.setActive(false);
         List<Role> list = new ArrayList<>();
         list.add(roleServise.procitatPoNaimenovanie("ROLE_USER"));
         sotrudnik.setRoles(list);
 
         repozitory.save(sotrudnik);
         emailServise.sendConfirmationEmail(sotrudnik);
+
+    }
+
+    @Override
+    public void confirmation(String code) {
+        Sotrudnik sotrudnik = new Sotrudnik();
+
+        if (repozitory.findByUsername(code)
+                .equals(confirmationServise.generateConfirmationCode(sotrudnik))) {
+            sotrudnik.setActive(true);
+        }
+
 
     }
 

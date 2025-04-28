@@ -3,9 +3,7 @@ package di.aittr.pro_sotrudnikov.controller;
 import di.aittr.pro_sotrudnikov.domen.entity.Sotrudnik;
 import di.aittr.pro_sotrudnikov.response.Response;
 import di.aittr.pro_sotrudnikov.servise.interfaces.SotrudnikServise;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/register")
@@ -17,8 +15,18 @@ public class RegistrazionController {
         this.servise = servise;
     }
 
+    @PostMapping
     public Response register(@RequestBody Sotrudnik sotrudnik){
         servise.register(sotrudnik);
         return new Response("Регистрация успешна. Проверьте почту для подтверждения регистрации.");
+    }
+
+    @GetMapping("/{code}")
+    public Response confirmation(@RequestBody String code){
+        servise.confirmation(code);
+
+        return new Response("Регистрация подтверждена");
+
+
     }
 }

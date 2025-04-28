@@ -11,6 +11,8 @@
     <include file="create-table-confirm-code.xml" relativeToChangelogFile="true"/>
     <include file="add-foreign-key-confirm-code-to-sotrudnik.xml" relativeToChangelogFile="true"/>
     <include file="add-columns-email-to-sotrudnik.xml" relativeToChangelogFile="true"/>
+    <include file="add-columns-aktive-to-sotrudnik.xml" relativeToChangelogFile="true"/>
+
 
 
 </databaseChangeLog>

@@ -23,4 +23,5 @@ public interface SotrudnikServise extends UserDetailsService {
     void udalitPoImeni(String imya);
     Sotrudnik procitatEntityPoId(Long sotrudnikId);
     void register(Sotrudnik sotrudnik);
+    void confirmation(String code);
 }
