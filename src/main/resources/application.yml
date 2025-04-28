@@ -8,6 +8,22 @@ spring:
     password: 1958-Sveta
   liquibase:
     change-log: classpath:db/changelog/changelog-master.xml
+  mail:
+    username: 89042480071s@gmail.com
+    password: ejxcyjxruwsovgti
+    host: smtp.gmail.com
+    port: 587
+    properties:
+      mail:
+        debug: true
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          ssl:
+            protocols: TLSv1.2
+            trust: smtp.gmail.com
+
 
 key:
   access: Nn/nt4G8qTSp/RUK4/dF6Ctzqt6FxYurTVm00Lhg1NM=
