@@ -31,6 +31,10 @@ public class AuthService {
         String usernaim = inboundUser.getUsername();
         UserDetails foundUser = sotrudnikServise.loadUserByUsername(usernaim);
 
+        if (!((Sotrudnik) foundUser).isActive()){
+            return null;
+        }
+
         if (passwordEncoder.matches(inboundUser.getPassword(), foundUser.getPassword())) {
             String accessToken = tokenService.generateAccessToken((Sotrudnik) foundUser);
             String refreshToken = tokenService.generateRefreshToken((Sotrudnik) foundUser);

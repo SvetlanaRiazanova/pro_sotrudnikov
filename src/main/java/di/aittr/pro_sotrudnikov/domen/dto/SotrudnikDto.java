@@ -7,6 +7,15 @@ public class SotrudnikDto {
     private String imya;
     private String username;
     private String password;
+    private String email;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getPassword() {
         return password;
@@ -43,13 +52,13 @@ public class SotrudnikDto {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        SotrudnikDto dto = (SotrudnikDto) o;
-        return Objects.equals(id, dto.id) && Objects.equals(imya, dto.imya) && Objects.equals(username, dto.username) && Objects.equals(password, dto.password);
+        SotrudnikDto that = (SotrudnikDto) o;
+        return Objects.equals(id, that.id) && Objects.equals(imya, that.imya) && Objects.equals(username, that.username) && Objects.equals(password, that.password) && Objects.equals(email, that.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, imya, username, password);
+        return Objects.hash(id, imya, username, password, email);
     }
 
     @Override

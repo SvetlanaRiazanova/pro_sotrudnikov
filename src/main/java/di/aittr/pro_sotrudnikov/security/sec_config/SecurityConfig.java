@@ -41,7 +41,7 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(x -> x
-                        .requestMatchers(HttpMethod.POST, "/sotrudniki").hasRole(ADMIN_ROLE)
+                        .requestMatchers(HttpMethod.POST, "/sotrudniki").permitAll()
                         .requestMatchers(HttpMethod.GET, "/sotrudniki").permitAll()
                         .requestMatchers(HttpMethod.GET, "/sotrudniki/{id}").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/sotrudniki").hasRole(ADMIN_ROLE)
@@ -68,6 +68,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/zadaci/{zadaciId}/").hasRole(ADMIN_ROLE)
                         .requestMatchers(HttpMethod.DELETE, "/zadaci/{zadaciId}/clear").hasRole(ADMIN_ROLE)
 
+                        .requestMatchers(HttpMethod.POST, "/register").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/register/{code}").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login", "/auth/refresh").permitAll()
 
                         .anyRequest().authenticated()
