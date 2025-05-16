@@ -27,5 +27,10 @@ public class ConfirmationServiseImpl implements ConfirmationServise {
         return code;
     }
 
+    @Override
+    public ConfirmationCode procitatPoCodu(String code) {
+        return repozitory.findByCode(code).orElse(null);
+    }
+
 
 }

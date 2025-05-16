@@ -1,6 +1,7 @@
 package di.aittr.pro_sotrudnikov.servise;
 
 import di.aittr.pro_sotrudnikov.domen.dto.SotrudnikDto;
+import di.aittr.pro_sotrudnikov.domen.entity.ConfirmationCode;
 import di.aittr.pro_sotrudnikov.domen.entity.Role;
 import di.aittr.pro_sotrudnikov.domen.entity.Sotrudnik;
 import di.aittr.pro_sotrudnikov.repozitory.SotrudnikRepozitory;
@@ -15,9 +16,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class SotrudnikServiseImpl implements SotrudnikServise {
@@ -101,27 +102,46 @@ public class SotrudnikServiseImpl implements SotrudnikServise {
         return sotrudnik;
     }
 
+    @Transactional
     @Override
-    public void register(Sotrudnik sotrudnik) {
-        sotrudnik.setId(null);
-        sotrudnik.setPassword(encoder.encode(sotrudnik.getPassword()));
-        sotrudnik.setActive(false);
-        List<Role> list = new ArrayList<>();
-        list.add(roleServise.procitatPoNaimenovanie("ROLE_USER"));
-        sotrudnik.setRoles(list);
+    public void register(SotrudnikDto dto) {
 
-        repozitory.save(sotrudnik);
-        emailServise.sendConfirmationEmail(sotrudnik);
+        try {
+            Sotrudnik entiti = (Sotrudnik) loadUserByUsername(dto.getUsername());
+
+            if (!entiti.isActive()) {
+                entiti.setPassword(encoder.encode(dto.getPassword()));
+                entiti.setEmail(dto.getEmail());
+                emailServise.sendConfirmationEmail(entiti);
+            }
+            if (entiti.isActive()) {
+                return;
+            }
+        } catch (UsernameNotFoundException e) {
+            Sotrudnik sotrudnik = mappingSernise.mahDtoToEntity(dto);
+            sotrudnik.setId(null);
+            sotrudnik.setPassword(encoder.encode(sotrudnik.getPassword()));
+            sotrudnik.setActive(false);
+            List<Role> list = new ArrayList<>();
+            list.add(roleServise.procitatPoNaimenovanie("ROLE_USER"));
+            sotrudnik.setRoles(list);
+
+            repozitory.save(sotrudnik);
+            emailServise.sendConfirmationEmail(sotrudnik);
+        }
 
     }
 
+    @Transactional
     @Override
     public void confirmation(String code) {
-        Sotrudnik sotrudnik = new Sotrudnik();
 
-        if (repozitory.findByUsername(code)
-                .equals(confirmationServise.generateConfirmationCode(sotrudnik))) {
-            sotrudnik.setActive(true);
+        ConfirmationCode confirmationCode = confirmationServise.procitatPoCodu(code);
+        LocalDateTime tecVremya = LocalDateTime.now();
+        LocalDateTime expired = confirmationCode.getExpired();
+        if (tecVremya.isBefore(expired)) {
+            confirmationCode.getSotrudnik().setActive(true);
+
         }
 
 

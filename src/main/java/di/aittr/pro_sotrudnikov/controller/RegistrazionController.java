@@ -1,6 +1,6 @@
 package di.aittr.pro_sotrudnikov.controller;
 
-import di.aittr.pro_sotrudnikov.domen.entity.Sotrudnik;
+import di.aittr.pro_sotrudnikov.domen.dto.SotrudnikDto;
 import di.aittr.pro_sotrudnikov.response.Response;
 import di.aittr.pro_sotrudnikov.servise.interfaces.SotrudnikServise;
 import org.springframework.web.bind.annotation.*;
@@ -16,13 +16,13 @@ public class RegistrazionController {
     }
 
     @PostMapping
-    public Response register(@RequestBody Sotrudnik sotrudnik){
+    public Response register(@RequestBody SotrudnikDto sotrudnik){
         servise.register(sotrudnik);
         return new Response("Регистрация успешна. Проверьте почту для подтверждения регистрации.");
     }
 
     @GetMapping("/{code}")
-    public Response confirmation(@RequestBody String code){
+    public Response confirmation(@PathVariable String code){
         servise.confirmation(code);
 
         return new Response("Регистрация подтверждена");
