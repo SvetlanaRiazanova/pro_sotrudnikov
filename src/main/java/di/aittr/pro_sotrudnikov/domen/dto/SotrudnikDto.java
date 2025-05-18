@@ -1,12 +1,31 @@
 package di.aittr.pro_sotrudnikov.domen.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
+@Schema(description = "Класс, который описывает ДТО сотрудника")
 public class SotrudnikDto {
+
+    @Schema(description = "Уникальный идентификатор сотрудника",
+            example = "777",
+            accessMode = Schema.AccessMode.READ_ONLY)
     private Long id;
+
+    @Schema(description = "Имя сотрудника",
+            example = "Вася")
     private String imya;
+
+    @Schema(description = "Логин сотрудника",
+            example = "Вася")
     private String username;
+
+    @Schema(description = "Пароль сотрудника",
+            example = "12345")
     private String password;
+
+    @Schema(description = "Электронная почта сотрудника",
+            example = "abc@mail.ru")
     private String email;
 
     public String getEmail() {

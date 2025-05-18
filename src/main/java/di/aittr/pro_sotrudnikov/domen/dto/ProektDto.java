@@ -1,15 +1,33 @@
 package di.aittr.pro_sotrudnikov.domen.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Schema(description = "Класс, который описывает ДТО проекта")
 public class ProektDto {
 
+    @Schema(description = "Уникальный идентификатор проекта",
+            example = "777",
+            accessMode = Schema.AccessMode.READ_ONLY)
     private Long id;
+
+    @Schema(description = "Название проекта",
+            example = "Умный дом")
     private String nazvanie;
+
+    @Schema(description = "Описание проекта",
+            example = "Строительство многоквартирного жилого дома")
     private String opisanie;
+
+    @Schema(description = "Список задач, необходимых для выполнения проекта",
+            example = "Разработка проектной документации, подготовка стоительной площадки, и др.")
     private List<ZadacaDto> spisokZadac = new ArrayList<>();
+
+    @Schema(description = "Автор проекта - имя сотрудника",
+            example = "Вася")
     private SotrudnikDto avtorProekta;
 
     public Long getId() {
