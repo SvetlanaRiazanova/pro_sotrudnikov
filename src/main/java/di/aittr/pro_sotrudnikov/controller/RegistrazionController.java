@@ -26,7 +26,7 @@ public class RegistrazionController {
                     "и отправка ему сообщения о регистрации на адрес его электронной почты")
     public Response register(@RequestBody
                              @io.swagger.v3.oas.annotations.parameters.
-                                     RequestBody(description = "Дто сотрудника с заполненным именем, логином и паролем")
+                                     RequestBody(description = "Дто сотрудника с заполненным именем, логином, паролем и email")
                              SotrudnikDto sotrudnik) {
         servise.register(sotrudnik);
         return new Response("Регистрация успешна. Проверьте почту для подтверждения регистрации.");
@@ -38,7 +38,7 @@ public class RegistrazionController {
             description = "Подтверждение регистрации сотрудника в базе данных"
     )
     public Response confirmation(@PathVariable
-                                 @Parameter(description = "Уникальный код сотрудника")
+                                 @Parameter(description = "Уникальный код подтверждения регистрации, сгенерированный для сотрудника")
                                  String code) {
         servise.confirmation(code);
 

@@ -22,12 +22,12 @@ public class ProektDto {
             example = "Строительство многоквартирного жилого дома")
     private String opisanie;
 
-    @Schema(description = "Список задач, необходимых для выполнения проекта",
-            example = "Разработка проектной документации, подготовка стоительной площадки, и др.")
+    @Schema(description = "Список задач, необходимых для выполнения проекта"
+            )
     private List<ZadacaDto> spisokZadac = new ArrayList<>();
 
-    @Schema(description = "Автор проекта - имя сотрудника",
-            example = "Вася")
+    @Schema(description = "Автор проекта - имя сотрудника"
+            )
     private SotrudnikDto avtorProekta;
 
     public Long getId() {

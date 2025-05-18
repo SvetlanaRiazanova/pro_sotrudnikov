@@ -84,7 +84,7 @@ public class ZadacaController {
             description = "Процесс изменения параметров одной задачи в базе данных по его идентификатору")
     public void obnovitPoId(@RequestBody
                             @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                                    description = "Дто задачи с заполненным названием и описанием")
+                                    description = "Дто задачи с заполненным идентификатором, названием и(или)описанием")
                             ZadacaDto zadaca) {
         servise.obnovitPoId(zadaca);
 

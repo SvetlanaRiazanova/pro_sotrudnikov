@@ -56,7 +56,7 @@ public class ProektController {
             description = "Процесс сохранения проекта в базу данных")
     public ProektDto sozdat(@RequestBody
                             @io.swagger.v3.oas.annotations.parameters.
-                                    RequestBody(description = "Дто проекта с заполненным названием, описанием и списком сотрудников")
+                                    RequestBody(description = "Дто проекта с заполненным названием и описанием")
                             ProektDto proekt,
                             @AuthenticationPrincipal String username) {
         return servise.sozdat(proekt, username);
@@ -87,7 +87,7 @@ public class ProektController {
             description = "Процесс изменения параметров одного проекта в базе данных по его идентификатору")
     public void obnovitPoId(@RequestBody
                             @io.swagger.v3.oas.annotations.parameters.
-                                    RequestBody(description = "Дто проекта с заполненным названием и описанием и списком сотрудников")
+                                    RequestBody(description = "Дто проекта с заполненным идентификатором, названием и(или)описанием")
                             ProektDto proekt) {
         servise.obnovitPoId(proekt);
 

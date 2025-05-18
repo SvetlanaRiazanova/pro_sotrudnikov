@@ -21,8 +21,8 @@ public class ZadacaDto {
             example = "Разработать проектную документацию для строительства жилого дома")
     private String opisanie;
 
-    @Schema(description = "Список сотрудников, работающих над проектом",
-            example = "Вася, Петя, и др.")
+    @Schema(description = "Список сотрудников, работающих над проектом"
+           )
     private List<SotrudnikDto> spisokSotrudnikov;
 
 
