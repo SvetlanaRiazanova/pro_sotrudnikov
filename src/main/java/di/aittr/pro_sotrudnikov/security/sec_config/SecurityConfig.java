@@ -72,7 +72,13 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/register/{code}").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login", "/auth/refresh").permitAll()
 
-                        .anyRequest().authenticated()
+                        .requestMatchers(
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/v3/api-docs/**",
+                                "/v3/api-docs",
+                                "/webjars/**"
+                        ).permitAll()
 
                 )
                 .addFilterAfter(filter, UsernamePasswordAuthenticationFilter.class)
