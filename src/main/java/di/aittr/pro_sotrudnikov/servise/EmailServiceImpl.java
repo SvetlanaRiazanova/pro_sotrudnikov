@@ -16,19 +16,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class EmailServiseImpl implements EmailServise {
+public class EmailServiceImpl implements EmailServise {
 
     private final JavaMailSender sender;
     private final Configuration mailConfig;
     private final ConfirmationServise confirmationService;
 
-    public EmailServiseImpl(JavaMailSender sender, Configuration mailConfig, ConfirmationServise confirmationService) {
+    public EmailServiceImpl(JavaMailSender sender, Configuration mailConfig, ConfirmationServise confirmationService) {
         this.sender = sender;
         this.mailConfig = mailConfig;
         this.confirmationService = confirmationService;
 
         mailConfig.setDefaultEncoding("UTF-8");
-        mailConfig.setTemplateLoader(new ClassTemplateLoader(EmailServiseImpl.class, "/mail/"));
+        mailConfig.setTemplateLoader(new ClassTemplateLoader(EmailServiceImpl.class, "/mail/"));
     }
 
 

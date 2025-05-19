@@ -12,13 +12,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ZadacaServiseImpl implements ZadacaServise {
+public class ZadacaServiceImpl implements ZadacaServise {
 
     private final ZadacaRepozitory repozitory;
     private final ZadacaMappingServise mappingServise;
     private final SotrudnikServise sotrudnikServise;
 
-    public ZadacaServiseImpl(ZadacaRepozitory repozitory, ZadacaMappingServise mappingServise, SotrudnikServise sotrudnikServise) {
+    public ZadacaServiceImpl(ZadacaRepozitory repozitory, ZadacaMappingServise mappingServise, SotrudnikServise sotrudnikServise) {
         this.repozitory = repozitory;
         this.mappingServise = mappingServise;
         this.sotrudnikServise = sotrudnikServise;

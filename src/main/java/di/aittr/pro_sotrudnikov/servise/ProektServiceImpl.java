@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ProektServiseImpl implements ProektServise {
+public class ProektServiceImpl implements ProektServise {
 
     private final ProektRepozitory repozitory;
     private final ProektMappingServise mappingServise;
@@ -23,8 +23,8 @@ public class ProektServiseImpl implements ProektServise {
     private final ZadacaServise zadacaServise;
 
 
-    public ProektServiseImpl(ProektRepozitory repozitory, ProektMappingServise mappingServise,
-                             SotrudnikServiseImpl sotrudnikServise, ZadacaServise zadacaServise) {
+    public ProektServiceImpl(ProektRepozitory repozitory, ProektMappingServise mappingServise,
+                             SotrudnikServiceImpl sotrudnikServise, ZadacaServise zadacaServise) {
         this.repozitory = repozitory;
         this.mappingServise = mappingServise;
         this.sotrudnikServise = sotrudnikServise;

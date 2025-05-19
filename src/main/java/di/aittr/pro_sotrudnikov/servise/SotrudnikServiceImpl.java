@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class SotrudnikServiseImpl implements SotrudnikServise {
+public class SotrudnikServiceImpl implements SotrudnikServise {
 
     private final SotrudnikRepozitory repozitory;
     private final BCryptPasswordEncoder encoder;
@@ -31,7 +31,7 @@ public class SotrudnikServiseImpl implements SotrudnikServise {
     private final ConfirmationServise confirmationServise;
 
 
-    public SotrudnikServiseImpl(SotrudnikRepozitory repozitory, BCryptPasswordEncoder encoder, RoleServise roleServise, SotrudnikMappingSernise mappingSernise, EmailServise emailServise, ConfirmationServise confirmationServise) {
+    public SotrudnikServiceImpl(SotrudnikRepozitory repozitory, BCryptPasswordEncoder encoder, RoleServise roleServise, SotrudnikMappingSernise mappingSernise, EmailServise emailServise, ConfirmationServise confirmationServise) {
         this.repozitory = repozitory;
         this.encoder = encoder;
         this.roleServise = roleServise;

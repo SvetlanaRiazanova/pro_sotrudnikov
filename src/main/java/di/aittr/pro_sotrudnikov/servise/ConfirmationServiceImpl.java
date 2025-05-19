@@ -10,11 +10,11 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
-public class ConfirmationServiseImpl implements ConfirmationServise {
+public class ConfirmationServiceImpl implements ConfirmationServise {
 
     private final ConfirmationCodeRepozitory repozitory;
 
-    public ConfirmationServiseImpl(ConfirmationCodeRepozitory repozitory) {
+    public ConfirmationServiceImpl(ConfirmationCodeRepozitory repozitory) {
         this.repozitory = repozitory;
     }
 

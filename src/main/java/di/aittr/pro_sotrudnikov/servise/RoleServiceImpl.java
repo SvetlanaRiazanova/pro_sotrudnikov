@@ -6,11 +6,11 @@ import di.aittr.pro_sotrudnikov.servise.interfaces.RoleServise;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RoleServiseImpl implements RoleServise {
+public class RoleServiceImpl implements RoleServise {
 
     public final RoleRepozitory repozitory;
 
-    public RoleServiseImpl(RoleRepozitory repozitory) {
+    public RoleServiceImpl(RoleRepozitory repozitory) {
         this.repozitory = repozitory;
     }
 

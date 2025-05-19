@@ -80,6 +80,8 @@ public class SecurityConfig {
                                 "/webjars/**"
                         ).permitAll()
 
+
+
                 )
                 .addFilterAfter(filter, UsernamePasswordAuthenticationFilter.class)
                 .build();
