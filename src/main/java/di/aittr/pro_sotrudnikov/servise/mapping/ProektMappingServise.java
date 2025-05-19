@@ -5,7 +5,7 @@ import di.aittr.pro_sotrudnikov.domen.entity.Proekt;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring", uses = {SotrudnikMappingSernise.class, ZadacaMappingServise.class})
+@Mapper(componentModel = "spring", uses = {SotrudnikMappingServise.class, ZadacaMappingServise.class})
 
 public interface ProektMappingServise {
 
