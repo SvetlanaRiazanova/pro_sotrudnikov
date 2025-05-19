@@ -9,7 +9,7 @@ import di.aittr.pro_sotrudnikov.servise.interfaces.ConfirmationServise;
 import di.aittr.pro_sotrudnikov.servise.interfaces.EmailServise;
 import di.aittr.pro_sotrudnikov.servise.interfaces.RoleServise;
 import di.aittr.pro_sotrudnikov.servise.interfaces.SotrudnikServise;
-import di.aittr.pro_sotrudnikov.servise.mapping.SotrudnikMappingSernise;
+import di.aittr.pro_sotrudnikov.servise.mapping.SotrudnikMappingServise;
 import jakarta.transaction.Transactional;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,17 +21,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class SotrudnikServiseImpl implements SotrudnikServise {
+public class SotrudnikServiceImpl implements SotrudnikServise {
 
     private final SotrudnikRepozitory repozitory;
     private final BCryptPasswordEncoder encoder;
     private final RoleServise roleServise;
-    private final SotrudnikMappingSernise mappingSernise;
+    private final SotrudnikMappingServise mappingSernise;
     private final EmailServise emailServise;
     private final ConfirmationServise confirmationServise;
 
 
-    public SotrudnikServiseImpl(SotrudnikRepozitory repozitory, BCryptPasswordEncoder encoder, RoleServise roleServise, SotrudnikMappingSernise mappingSernise, EmailServise emailServise, ConfirmationServise confirmationServise) {
+    public SotrudnikServiceImpl(SotrudnikRepozitory repozitory, BCryptPasswordEncoder encoder, RoleServise roleServise, SotrudnikMappingServise mappingSernise, EmailServise emailServise, ConfirmationServise confirmationServise) {
         this.repozitory = repozitory;
         this.encoder = encoder;
         this.roleServise = roleServise;
