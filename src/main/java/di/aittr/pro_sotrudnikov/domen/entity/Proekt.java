@@ -1,6 +1,7 @@
 package di.aittr.pro_sotrudnikov.domen.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 
 import java.util.*;
 
@@ -14,9 +15,15 @@ public class Proekt {
     private Long id;
 
     @Column(name = "nazvanie")
+    @Pattern(
+            regexp = "[A-Z][a-z ]{2,}",
+            message = "Название проекта должно быть как минимум 3 символа в длину и начинаться с большой буквы")
     private String nazvanie;
 
     @Column(name = "opisanie")
+    @Pattern(
+            regexp = "[A-Z][a-z ]{2,}",
+            message = "Описание проекта должно быть как минимум 3 символа в длину и начинаться с большой буквы")
     private String opisanie;
 
     @OneToMany(mappedBy = "proekt", cascade = CascadeType.ALL)

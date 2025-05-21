@@ -1,6 +1,7 @@
 package di.aittr.pro_sotrudnikov.domen.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 
 import java.util.List;
 import java.util.Objects;
@@ -15,9 +16,15 @@ public class Zadaca {
     private Long id;
 
     @Column(name = "nazvanie")
+    @Pattern(
+            regexp = "[A-Z][a-z ]{2,}",
+            message = "Название задачи должно быть как минимум 3 символа в длину и начинаться с большой буквы")
     private String nazvanie;
 
     @Column(name = "opisanie")
+    @Pattern(
+            regexp = "[A-Z][a-z ]{2,}",
+            message = "Описание задачи должно быть как минимум 3 символа в длину и начинаться с большой буквы")
     private String opisanie;
 
     @ManyToMany

@@ -4,6 +4,7 @@ import di.aittr.pro_sotrudnikov.domen.dto.ProektDto;
 import di.aittr.pro_sotrudnikov.domen.entity.Proekt;
 import di.aittr.pro_sotrudnikov.domen.entity.Sotrudnik;
 import di.aittr.pro_sotrudnikov.domen.entity.Zadaca;
+import di.aittr.pro_sotrudnikov.exeption_handling.handling.exeptions.ProektValidacionExeption;
 import di.aittr.pro_sotrudnikov.repozitory.ProektRepozitory;
 import di.aittr.pro_sotrudnikov.servise.interfaces.ProektServise;
 import di.aittr.pro_sotrudnikov.servise.interfaces.SotrudnikServise;
@@ -36,10 +37,16 @@ public class ProektServiceImpl implements ProektServise {
     @Transactional
     @Override
     public ProektDto sozdat(ProektDto dto, String username) {
-        Proekt entity = mappingServise.mahDtoToEntity(dto);
-        entity.setAvtorProekta((Sotrudnik) sotrudnikServise.loadUserByUsername(username));
-        entity = repozitory.save(entity);
-        return mappingServise.mapEntityToDto(entity);
+
+        try {
+            Proekt entity = mappingServise.mahDtoToEntity(dto);
+            entity.setAvtorProekta((Sotrudnik) sotrudnikServise.loadUserByUsername(username));
+            entity = repozitory.save(entity);
+            return mappingServise.mapEntityToDto(entity);
+        } catch (Exception e) {
+            throw new ProektValidacionExeption(e);
+        }
+
     }
 
     @Override
@@ -59,9 +66,14 @@ public class ProektServiceImpl implements ProektServise {
     @Transactional
     @Override
     public void obnovitPoId(ProektDto proekt) {
-        Long id = proekt.getId();
-        ProektDto sushestvProekt = procitatPoId(id);
-        sushestvProekt.setNazvanie(proekt.getNazvanie());
+
+        try {
+            Long id = proekt.getId();
+            ProektDto sushestvProekt = procitatPoId(id);
+            sushestvProekt.setNazvanie(proekt.getNazvanie());
+        } catch (Exception e) {
+            throw new ProektValidacionExeption(e);
+        }
 
     }
 

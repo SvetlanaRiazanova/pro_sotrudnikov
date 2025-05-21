@@ -1,6 +1,9 @@
 package di.aittr.pro_sotrudnikov.domen.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -18,15 +21,27 @@ public class Sotrudnik implements UserDetails {
     private Long id;
 
     @Column(name = "imia")
+    @Pattern(
+            regexp = "[A-Z][a-z ]{1,}",
+            message = "Имя сотрудника должно быть как минимум 2 символа в длину и начинаться с большой буквы")
     private String imya;
 
     @Column(name = "username")
+    @Pattern(
+            regexp = "[A-Z][a-z]{4,}",
+            message = "Username сотрудника должен быть как минимум 5 символов в длину и начинаться с большой буквы")
     private String username;
 
     @Column(name = "password")
+    @Pattern(
+            regexp = "[A-Za-z0-9]{8,20}",
+            message = "Пароль сотрудника должен быть как минимум 9 и максимум 20 символов в длину")
     private String password;
 
     @Column(name = "email")
+    @Pattern(
+            regexp = "^(.+)@(\\ S\\.+)$",
+            message = "email сотрудника должен быть без пробелов и содержать символ @")
     private String email;
 
     @Column(name = "active")
