@@ -2,6 +2,7 @@ package di.aittr.pro_sotrudnikov.servise;
 
 import di.aittr.pro_sotrudnikov.domen.dto.ZadacaDto;
 import di.aittr.pro_sotrudnikov.domen.entity.Zadaca;
+import di.aittr.pro_sotrudnikov.exeption_handling.handling.exeptions.ZadacaValidacionExeption;
 import di.aittr.pro_sotrudnikov.repozitory.ZadacaRepozitory;
 import di.aittr.pro_sotrudnikov.servise.interfaces.SotrudnikServise;
 import di.aittr.pro_sotrudnikov.servise.interfaces.ZadacaServise;
@@ -27,9 +28,15 @@ public class ZadacaServiceImpl implements ZadacaServise {
 
     @Override
     public ZadacaDto sozdat(ZadacaDto dto) {
-        Zadaca entity = mappingServise.mahDtoToEntity(dto);
-        entity = repozitory.save(entity);
-        return mappingServise.mapEntityToDto(entity);
+
+        try {
+            Zadaca entity = mappingServise.mahDtoToEntity(dto);
+            entity = repozitory.save(entity);
+            return mappingServise.mapEntityToDto(entity);
+        } catch (Exception e) {
+            throw new ZadacaValidacionExeption(e);
+        }
+
     }
 
     @Override
@@ -49,9 +56,15 @@ public class ZadacaServiceImpl implements ZadacaServise {
     @Transactional
     @Override
     public void obnovitPoId(ZadacaDto zadaca) {
-        Long id = zadaca.getId();
-        ZadacaDto sushestvZadaca = procitatPoId(id);
-        sushestvZadaca.setOpisanie(zadaca.getOpisanie());
+
+        try {
+            Long id = zadaca.getId();
+            ZadacaDto sushestvZadaca = procitatPoId(id);
+            sushestvZadaca.setOpisanie(zadaca.getOpisanie());
+        } catch (Exception e) {
+            throw new ZadacaValidacionExeption(e);
+        }
+
 
     }
 

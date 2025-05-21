@@ -4,6 +4,8 @@ import di.aittr.pro_sotrudnikov.domen.dto.SotrudnikDto;
 import di.aittr.pro_sotrudnikov.domen.entity.ConfirmationCode;
 import di.aittr.pro_sotrudnikov.domen.entity.Role;
 import di.aittr.pro_sotrudnikov.domen.entity.Sotrudnik;
+import di.aittr.pro_sotrudnikov.exeption_handling.handling.exeptions.SotrudnikNeNaidenExeption;
+import di.aittr.pro_sotrudnikov.exeption_handling.handling.exeptions.SotrudnikValidacionExeption;
 import di.aittr.pro_sotrudnikov.repozitory.SotrudnikRepozitory;
 import di.aittr.pro_sotrudnikov.servise.interfaces.ConfirmationServise;
 import di.aittr.pro_sotrudnikov.servise.interfaces.EmailServise;
@@ -43,14 +45,18 @@ public class SotrudnikServiceImpl implements SotrudnikServise {
     @Override
     @Transactional
     public SotrudnikDto sozdat(SotrudnikDto dto) {
-        Sotrudnik entity = mappingSernise.mahDtoToEntity(dto);
-        entity.setPassword(encoder.encode(entity.getPassword()));
-        List<Role> list = new ArrayList<>();
-        list.add(roleServise.procitatPoNaimenovanie("ROLE_USER"));
-        entity.setRoles(list);
-        entity = repozitory.save(entity);
-        return mappingSernise.mapEntityToDto(entity);
 
+        try {
+            Sotrudnik entity = mappingSernise.mahDtoToEntity(dto);
+            entity.setPassword(encoder.encode(entity.getPassword()));
+            List<Role> list = new ArrayList<>();
+            list.add(roleServise.procitatPoNaimenovanie("ROLE_USER"));
+            entity.setRoles(list);
+            entity = repozitory.save(entity);
+            return mappingSernise.mapEntityToDto(entity);
+        } catch (Exception e) {
+            throw new SotrudnikValidacionExeption(e);
+        }
     }
 
     @Override
@@ -64,15 +70,26 @@ public class SotrudnikServiceImpl implements SotrudnikServise {
     @Override
     public SotrudnikDto procitatPoId(Long id) {
         Sotrudnik sotrudnik = procitatEntityPoId(id);
+
+        if (sotrudnik == null) {
+            throw new SotrudnikNeNaidenExeption(id);
+        }
         return mappingSernise.mapEntityToDto(sotrudnik);
+
     }
 
     @Transactional
     @Override
     public void obnovitPoId(SotrudnikDto sotrudnik) {
-        Long id = sotrudnik.getId();
-        SotrudnikDto sushestvSotrudnik = procitatPoId(id);
-        sushestvSotrudnik.setImya(sotrudnik.getImya());
+
+        try {
+            Long id = sotrudnik.getId();
+            SotrudnikDto sushestvSotrudnik = procitatPoId(id);
+            sushestvSotrudnik.setImya(sotrudnik.getImya());
+
+        } catch (Exception e) {
+            throw new SotrudnikValidacionExeption(e);
+        }
 
     }
 
@@ -143,8 +160,5 @@ public class SotrudnikServiceImpl implements SotrudnikServise {
             confirmationCode.getSotrudnik().setActive(true);
 
         }
-
-
     }
-
 }
