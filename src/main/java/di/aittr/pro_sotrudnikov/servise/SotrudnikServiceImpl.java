@@ -4,7 +4,8 @@ import di.aittr.pro_sotrudnikov.domen.dto.SotrudnikDto;
 import di.aittr.pro_sotrudnikov.domen.entity.ConfirmationCode;
 import di.aittr.pro_sotrudnikov.domen.entity.Role;
 import di.aittr.pro_sotrudnikov.domen.entity.Sotrudnik;
-import di.aittr.pro_sotrudnikov.exeption_handling.handling.exeptions.IstekSrokDeistviyaCoda;
+import di.aittr.pro_sotrudnikov.exeption_handling.handling.exeptions.IstekSrokDeistviyaCodaExeption;
+import di.aittr.pro_sotrudnikov.exeption_handling.handling.exeptions.OschibkaRegistraziiExeption;
 import di.aittr.pro_sotrudnikov.exeption_handling.handling.exeptions.SotrudnikNeNaidenExeption;
 import di.aittr.pro_sotrudnikov.exeption_handling.handling.exeptions.SotrudnikValidacionExeption;
 import di.aittr.pro_sotrudnikov.repozitory.SotrudnikRepozitory;
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public abstract class SotrudnikServiceImpl implements SotrudnikServise {
+public class SotrudnikServiceImpl implements SotrudnikServise {
 
     private final SotrudnikRepozitory repozitory;
     private final BCryptPasswordEncoder encoder;
@@ -70,23 +71,13 @@ public abstract class SotrudnikServiceImpl implements SotrudnikServise {
 
     @Override
     public SotrudnikDto procitatPoId(Long id) {
-        Sotrudnik sotrudnik = procitatEntityPoId(id);
-
-        if (sotrudnik == null) {
-            throw new SotrudnikNeNaidenExeption(id);
-        }
-        return mappingSernise.mapEntityToDto(sotrudnik);
+        return mappingSernise.mapEntityToDto(procitatEntityPoId(id));
 
     }
 
     @Override
     public SotrudnikDto procitatPoImeni(String imya) {
-        Sotrudnik sotrudnik = procitatEntityPoImeni(imya);
-
-        if (sotrudnik == null) {
-            throw new SotrudnikNeNaidenExeption(imya);
-        }
-        return mappingSernise.mapEntityToDto(sotrudnik);
+        return mappingSernise.mapEntityToDto(procitatEntityPoImeni(imya));
     }
 
 
@@ -107,11 +98,6 @@ public abstract class SotrudnikServiceImpl implements SotrudnikServise {
 
     @Override
     public void udalitPoId(Long id) {
-        Sotrudnik sotrudnik = procitatEntityPoId(id);
-
-        if (sotrudnik == null) {
-            throw new SotrudnikNeNaidenExeption(id);
-        }
         repozitory.deleteById(id);
 
     }
@@ -119,11 +105,6 @@ public abstract class SotrudnikServiceImpl implements SotrudnikServise {
     @Transactional
     @Override
     public void udalitPoImeni(String imya) {
-        Sotrudnik sotrudnik = procitatEntityPoImeni(imya);
-
-        if (sotrudnik == null) {
-            throw new SotrudnikNeNaidenExeption(imya);
-        }
         repozitory.deleteByImya(imya);
 
     }
@@ -137,15 +118,15 @@ public abstract class SotrudnikServiceImpl implements SotrudnikServise {
 
     @Override
     public Sotrudnik procitatEntityPoId(Long sotrudnikId) {
-        Sotrudnik sotrudnik = repozitory.findById(sotrudnikId).orElseThrow(
+        return repozitory.findById(sotrudnikId).orElseThrow(
                 () -> new SotrudnikNeNaidenExeption(sotrudnikId));
-        return sotrudnik;
+
     }
 
     public Sotrudnik procitatEntityPoImeni(String sotrudnikImya) {
-        Sotrudnik sotrudnik = repozitory.findByImeni(sotrudnikImya).orElseThrow(
+        return repozitory.findByImya(sotrudnikImya).orElseThrow(
                 () -> new SotrudnikNeNaidenExeption(sotrudnikImya));
-        return sotrudnik;
+
     }
 
     @Transactional
@@ -161,7 +142,7 @@ public abstract class SotrudnikServiceImpl implements SotrudnikServise {
                 emailServise.sendConfirmationEmail(entiti);
             }
             if (entiti.isActive()) {
-                return;
+                throw new OschibkaRegistraziiExeption();
             }
         } catch (UsernameNotFoundException e) {
             Sotrudnik sotrudnik = mappingSernise.mahDtoToEntity(dto);
@@ -186,12 +167,11 @@ public abstract class SotrudnikServiceImpl implements SotrudnikServise {
         LocalDateTime tecVremya = LocalDateTime.now();
         LocalDateTime expired = confirmationCode.getExpired();
 
-        if (tecVremya.isAfter(expired)){
-            throw new IstekSrokDeistviyaCoda();
+        if (tecVremya.isAfter(expired)) {
+            throw new IstekSrokDeistviyaCodaExeption();
         }
 
-        if (tecVremya.isBefore(expired)) {
-            confirmationCode.getSotrudnik().setActive(true);
-        }
+        confirmationCode.getSotrudnik().setActive(true);
+
     }
 }

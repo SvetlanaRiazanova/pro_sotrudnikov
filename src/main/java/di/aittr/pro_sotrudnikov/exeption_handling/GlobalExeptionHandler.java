@@ -36,10 +36,16 @@ public class GlobalExeptionHandler {
         Response response = new Response(partsResponse[1]);
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
-    @ExceptionHandler(IstekSrokDeistviyaCoda.class)
-    public ResponseEntity<Response> handlerExeption(IstekSrokDeistviyaCoda e) {
+    @ExceptionHandler(IstekSrokDeistviyaCodaExeption.class)
+    public ResponseEntity<Response> handlerExeption(IstekSrokDeistviyaCodaExeption e) {
         Response response = new Response(e.getMessage());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(OschibkaRegistraziiExeption.class)
+    public ResponseEntity<Response> handlerExeption(OschibkaRegistraziiExeption e) {
+        Response response = new Response(e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 }
 
