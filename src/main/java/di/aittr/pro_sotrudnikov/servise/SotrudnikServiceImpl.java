@@ -4,6 +4,7 @@ import di.aittr.pro_sotrudnikov.domen.dto.SotrudnikDto;
 import di.aittr.pro_sotrudnikov.domen.entity.ConfirmationCode;
 import di.aittr.pro_sotrudnikov.domen.entity.Role;
 import di.aittr.pro_sotrudnikov.domen.entity.Sotrudnik;
+import di.aittr.pro_sotrudnikov.exeption_handling.handling.exeptions.IstekSrokDeistviyaCoda;
 import di.aittr.pro_sotrudnikov.exeption_handling.handling.exeptions.SotrudnikNeNaidenExeption;
 import di.aittr.pro_sotrudnikov.exeption_handling.handling.exeptions.SotrudnikValidacionExeption;
 import di.aittr.pro_sotrudnikov.repozitory.SotrudnikRepozitory;
@@ -23,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class SotrudnikServiceImpl implements SotrudnikServise {
+public abstract class SotrudnikServiceImpl implements SotrudnikServise {
 
     private final SotrudnikRepozitory repozitory;
     private final BCryptPasswordEncoder encoder;
@@ -78,6 +79,17 @@ public class SotrudnikServiceImpl implements SotrudnikServise {
 
     }
 
+    @Override
+    public SotrudnikDto procitatPoImeni(String imya) {
+        Sotrudnik sotrudnik = procitatEntityPoImeni(imya);
+
+        if (sotrudnik == null) {
+            throw new SotrudnikNeNaidenExeption(imya);
+        }
+        return mappingSernise.mapEntityToDto(sotrudnik);
+    }
+
+
     @Transactional
     @Override
     public void obnovitPoId(SotrudnikDto sotrudnik) {
@@ -95,6 +107,11 @@ public class SotrudnikServiceImpl implements SotrudnikServise {
 
     @Override
     public void udalitPoId(Long id) {
+        Sotrudnik sotrudnik = procitatEntityPoId(id);
+
+        if (sotrudnik == null) {
+            throw new SotrudnikNeNaidenExeption(id);
+        }
         repozitory.deleteById(id);
 
     }
@@ -102,6 +119,11 @@ public class SotrudnikServiceImpl implements SotrudnikServise {
     @Transactional
     @Override
     public void udalitPoImeni(String imya) {
+        Sotrudnik sotrudnik = procitatEntityPoImeni(imya);
+
+        if (sotrudnik == null) {
+            throw new SotrudnikNeNaidenExeption(imya);
+        }
         repozitory.deleteByImya(imya);
 
     }
@@ -115,7 +137,14 @@ public class SotrudnikServiceImpl implements SotrudnikServise {
 
     @Override
     public Sotrudnik procitatEntityPoId(Long sotrudnikId) {
-        Sotrudnik sotrudnik = repozitory.findById(sotrudnikId).orElse(null);
+        Sotrudnik sotrudnik = repozitory.findById(sotrudnikId).orElseThrow(
+                () -> new SotrudnikNeNaidenExeption(sotrudnikId));
+        return sotrudnik;
+    }
+
+    public Sotrudnik procitatEntityPoImeni(String sotrudnikImya) {
+        Sotrudnik sotrudnik = repozitory.findByImeni(sotrudnikImya).orElseThrow(
+                () -> new SotrudnikNeNaidenExeption(sotrudnikImya));
         return sotrudnik;
     }
 
@@ -156,9 +185,13 @@ public class SotrudnikServiceImpl implements SotrudnikServise {
         ConfirmationCode confirmationCode = confirmationServise.procitatPoCodu(code);
         LocalDateTime tecVremya = LocalDateTime.now();
         LocalDateTime expired = confirmationCode.getExpired();
+
+        if (tecVremya.isAfter(expired)){
+            throw new IstekSrokDeistviyaCoda();
+        }
+
         if (tecVremya.isBefore(expired)) {
             confirmationCode.getSotrudnik().setActive(true);
-
         }
     }
 }

@@ -18,6 +18,7 @@ public interface SotrudnikServise extends UserDetailsService {
     SotrudnikDto sozdat(SotrudnikDto sotrudnik);
     List<SotrudnikDto> procitatVseh();
     SotrudnikDto procitatPoId(Long id);
+    SotrudnikDto procitatPoImeni(String imya);
     void obnovitPoId(SotrudnikDto sotrudnik);
     void udalitPoId(Long id);
     void udalitPoImeni(String imya);

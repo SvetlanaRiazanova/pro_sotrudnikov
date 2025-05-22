@@ -7,4 +7,8 @@ public class SotrudnikNeNaidenExeption extends RuntimeException{
         super(String.format("Сотрудник с ИД %d не найден", id));
     }
 
+    public SotrudnikNeNaidenExeption(String imya) {
+        super(String.format("Сотрудник с именем %s не найден", imya));
+    }
+
 }
