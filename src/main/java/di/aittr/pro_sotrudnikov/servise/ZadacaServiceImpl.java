@@ -2,6 +2,8 @@ package di.aittr.pro_sotrudnikov.servise;
 
 import di.aittr.pro_sotrudnikov.domen.dto.ZadacaDto;
 import di.aittr.pro_sotrudnikov.domen.entity.Zadaca;
+import di.aittr.pro_sotrudnikov.exeption_handling.handling.exeptions.ProektNeNaidenExeption;
+import di.aittr.pro_sotrudnikov.exeption_handling.handling.exeptions.ZadacaNeNaidenExeption;
 import di.aittr.pro_sotrudnikov.exeption_handling.handling.exeptions.ZadacaValidacionExeption;
 import di.aittr.pro_sotrudnikov.repozitory.ZadacaRepozitory;
 import di.aittr.pro_sotrudnikov.servise.interfaces.SotrudnikServise;
@@ -83,9 +85,9 @@ public class ZadacaServiceImpl implements ZadacaServise {
 
     @Override
     public Zadaca procitatEntityPoId(Long zadacaId) {
-        Zadaca zadaca = repozitory.findById(zadacaId).orElse(null);
-        return zadaca;
-    }
+        return repozitory.findById(zadacaId).orElseThrow(
+                () -> new ZadacaNeNaidenExeption(zadacaId));
+            }
 
 
     @Transactional

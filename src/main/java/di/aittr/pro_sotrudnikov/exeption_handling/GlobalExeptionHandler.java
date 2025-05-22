@@ -47,6 +47,18 @@ public class GlobalExeptionHandler {
         Response response = new Response(e.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(ProektNeNaidenExeption.class)
+    public ResponseEntity<Response> handlerExeption(ProektNeNaidenExeption e) {
+        Response response = new Response(e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(ZadacaNeNaidenExeption.class)
+    public ResponseEntity<Response> handlerExeption(ZadacaNeNaidenExeption e) {
+        Response response = new Response(e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
 }
 
 

@@ -4,7 +4,9 @@ import di.aittr.pro_sotrudnikov.domen.dto.ProektDto;
 import di.aittr.pro_sotrudnikov.domen.entity.Proekt;
 import di.aittr.pro_sotrudnikov.domen.entity.Sotrudnik;
 import di.aittr.pro_sotrudnikov.domen.entity.Zadaca;
+import di.aittr.pro_sotrudnikov.exeption_handling.handling.exeptions.ProektNeNaidenExeption;
 import di.aittr.pro_sotrudnikov.exeption_handling.handling.exeptions.ProektValidacionExeption;
+import di.aittr.pro_sotrudnikov.exeption_handling.handling.exeptions.SotrudnikNeNaidenExeption;
 import di.aittr.pro_sotrudnikov.repozitory.ProektRepozitory;
 import di.aittr.pro_sotrudnikov.servise.interfaces.ProektServise;
 import di.aittr.pro_sotrudnikov.servise.interfaces.SotrudnikServise;
@@ -92,8 +94,8 @@ public class ProektServiceImpl implements ProektServise {
 
     @Override
     public Proekt procitatEntityPoId(Long proektId) {
-        Proekt proekt = repozitory.findById(proektId).orElse(null);
-        return proekt;
+        return repozitory.findById(proektId).orElseThrow(
+                () -> new ProektNeNaidenExeption(proektId));
 
     }
 
