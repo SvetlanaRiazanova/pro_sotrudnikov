@@ -1,6 +1,7 @@
 package di.aittr.pro_sotrudnikov.servise;
 
 import di.aittr.pro_sotrudnikov.domen.entity.Sotrudnik;
+import di.aittr.pro_sotrudnikov.exeption_handling.handling.exeptions.OschibkaOtpravkiSoobshcheniyaExeption;
 import di.aittr.pro_sotrudnikov.servise.interfaces.ConfirmationServise;
 import di.aittr.pro_sotrudnikov.servise.interfaces.EmailServise;
 import freemarker.cache.ClassTemplateLoader;
@@ -48,7 +49,7 @@ public class EmailServiceImpl implements EmailServise {
             sender.send(message);
 
         }catch (Exception e){
-            throw new RuntimeException(e);
+            throw new OschibkaOtpravkiSoobshcheniyaExeption("Не удалось отправить сообщение");
         }
 
     }
@@ -65,7 +66,7 @@ public class EmailServiceImpl implements EmailServise {
             return FreeMarkerTemplateUtils.processTemplateIntoString(template, params);
 
         }catch (Exception e){
-            throw new RuntimeException(e);
+            throw new OschibkaOtpravkiSoobshcheniyaExeption("Не удалось сформировать сообщение");
         }
 
     }

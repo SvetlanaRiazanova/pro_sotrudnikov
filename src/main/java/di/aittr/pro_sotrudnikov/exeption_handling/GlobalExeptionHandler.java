@@ -59,6 +59,24 @@ public class GlobalExeptionHandler {
         Response response = new Response(e.getMessage());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(OschibkaPodtverzcdeniyaCodaExeption.class)
+    public ResponseEntity<Response> handlerExeption(OschibkaPodtverzcdeniyaCodaExeption e) {
+        Response response = new Response(e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(OschibkaOtpravkiSoobshcheniyaExeption.class)
+    public ResponseEntity<Response> handlerExeption(OschibkaOtpravkiSoobshcheniyaExeption e) {
+        Response response = new Response(e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(RoleNeNaidenExeption.class)
+    public ResponseEntity<Response> handlerExeption(RoleNeNaidenExeption e) {
+        Response response = new Response(e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
 }
 
 
