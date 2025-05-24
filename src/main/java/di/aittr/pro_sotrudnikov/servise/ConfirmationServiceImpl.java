@@ -2,6 +2,7 @@ package di.aittr.pro_sotrudnikov.servise;
 
 import di.aittr.pro_sotrudnikov.domen.entity.ConfirmationCode;
 import di.aittr.pro_sotrudnikov.domen.entity.Sotrudnik;
+import di.aittr.pro_sotrudnikov.exeption_handling.handling.exeptions.OschibkaPodtverzcdeniyaCodaExeption;
 import di.aittr.pro_sotrudnikov.repozitory.ConfirmationCodeRepozitory;
 import di.aittr.pro_sotrudnikov.servise.interfaces.ConfirmationServise;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,8 @@ public class ConfirmationServiceImpl implements ConfirmationServise {
 
     @Override
     public ConfirmationCode procitatPoCodu(String code) {
-        return repozitory.findByCode(code).orElse(null);
+        return repozitory.findByCode(code).orElseThrow(
+                () -> new OschibkaPodtverzcdeniyaCodaExeption());
     }
 
 

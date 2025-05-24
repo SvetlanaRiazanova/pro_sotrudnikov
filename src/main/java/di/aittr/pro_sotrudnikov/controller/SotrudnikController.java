@@ -107,5 +107,15 @@ public class SotrudnikController {
         servise.udalitPoImeni(imya);
 
     }
+    @GetMapping("/{imya}")
+    @Operation(
+            summary = "прочитать одного сотрудника по имени",
+            description = "процесс вывода одного сотрудника с его параметрами из базы данных по его имени")
+
+    public SotrudnikDto procitatPoImeni(@PathVariable
+                                     @Parameter(description = "Уникальное имя сотрудника")
+                                     String imya) {
+        return servise.procitatPoImeni(imya);
+    }
 
 }

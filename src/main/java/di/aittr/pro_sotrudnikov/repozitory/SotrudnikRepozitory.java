@@ -11,4 +11,6 @@ public interface SotrudnikRepozitory extends JpaRepository<Sotrudnik, Long> {
 
     Optional<Sotrudnik> findByUsername(String username);
 
+    Optional<Sotrudnik> findByImya(String imya);
+
 }

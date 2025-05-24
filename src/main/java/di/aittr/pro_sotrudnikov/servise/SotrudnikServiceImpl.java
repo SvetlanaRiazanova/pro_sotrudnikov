@@ -4,6 +4,8 @@ import di.aittr.pro_sotrudnikov.domen.dto.SotrudnikDto;
 import di.aittr.pro_sotrudnikov.domen.entity.ConfirmationCode;
 import di.aittr.pro_sotrudnikov.domen.entity.Role;
 import di.aittr.pro_sotrudnikov.domen.entity.Sotrudnik;
+import di.aittr.pro_sotrudnikov.exeption_handling.handling.exeptions.IstekSrokDeistviyaCodaExeption;
+import di.aittr.pro_sotrudnikov.exeption_handling.handling.exeptions.OschibkaRegistraziiExeption;
 import di.aittr.pro_sotrudnikov.exeption_handling.handling.exeptions.SotrudnikNeNaidenExeption;
 import di.aittr.pro_sotrudnikov.exeption_handling.handling.exeptions.SotrudnikValidacionExeption;
 import di.aittr.pro_sotrudnikov.repozitory.SotrudnikRepozitory;
@@ -69,14 +71,15 @@ public class SotrudnikServiceImpl implements SotrudnikServise {
 
     @Override
     public SotrudnikDto procitatPoId(Long id) {
-        Sotrudnik sotrudnik = procitatEntityPoId(id);
-
-        if (sotrudnik == null) {
-            throw new SotrudnikNeNaidenExeption(id);
-        }
-        return mappingSernise.mapEntityToDto(sotrudnik);
+        return mappingSernise.mapEntityToDto(procitatEntityPoId(id));
 
     }
+
+    @Override
+    public SotrudnikDto procitatPoImeni(String imya) {
+        return mappingSernise.mapEntityToDto(procitatEntityPoImeni(imya));
+    }
+
 
     @Transactional
     @Override
@@ -115,8 +118,15 @@ public class SotrudnikServiceImpl implements SotrudnikServise {
 
     @Override
     public Sotrudnik procitatEntityPoId(Long sotrudnikId) {
-        Sotrudnik sotrudnik = repozitory.findById(sotrudnikId).orElse(null);
-        return sotrudnik;
+        return repozitory.findById(sotrudnikId).orElseThrow(
+                () -> new SotrudnikNeNaidenExeption(sotrudnikId));
+
+    }
+
+    public Sotrudnik procitatEntityPoImeni(String sotrudnikImya) {
+        return repozitory.findByImya(sotrudnikImya).orElseThrow(
+                () -> new SotrudnikNeNaidenExeption(sotrudnikImya));
+
     }
 
     @Transactional
@@ -132,7 +142,7 @@ public class SotrudnikServiceImpl implements SotrudnikServise {
                 emailServise.sendConfirmationEmail(entiti);
             }
             if (entiti.isActive()) {
-                return;
+                throw new OschibkaRegistraziiExeption();
             }
         } catch (UsernameNotFoundException e) {
             Sotrudnik sotrudnik = mappingSernise.mahDtoToEntity(dto);
@@ -156,9 +166,12 @@ public class SotrudnikServiceImpl implements SotrudnikServise {
         ConfirmationCode confirmationCode = confirmationServise.procitatPoCodu(code);
         LocalDateTime tecVremya = LocalDateTime.now();
         LocalDateTime expired = confirmationCode.getExpired();
-        if (tecVremya.isBefore(expired)) {
-            confirmationCode.getSotrudnik().setActive(true);
 
+        if (tecVremya.isAfter(expired)) {
+            throw new IstekSrokDeistviyaCodaExeption();
         }
+
+        confirmationCode.getSotrudnik().setActive(true);
+
     }
 }
