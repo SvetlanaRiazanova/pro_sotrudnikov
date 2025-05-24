@@ -49,7 +49,7 @@ public class EmailServiceImpl implements EmailServise {
             sender.send(message);
 
         }catch (Exception e){
-            throw new OschibkaOtpravkiSoobshcheniyaExeption("Не удалось отправить сообщение");
+            throw new OschibkaOtpravkiSoobshcheniyaExeption("Не удалось отправить сообщение", e);
         }
 
     }
@@ -66,7 +66,7 @@ public class EmailServiceImpl implements EmailServise {
             return FreeMarkerTemplateUtils.processTemplateIntoString(template, params);
 
         }catch (Exception e){
-            throw new OschibkaOtpravkiSoobshcheniyaExeption("Не удалось сформировать сообщение");
+            throw new OschibkaOtpravkiSoobshcheniyaExeption("Не удалось сформировать сообщение", e);
         }
 
     }

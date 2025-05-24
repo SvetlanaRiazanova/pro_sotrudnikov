@@ -1,6 +1,8 @@
 package di.aittr.pro_sotrudnikov.security.sec_service;
 
 import di.aittr.pro_sotrudnikov.domen.entity.Sotrudnik;
+import di.aittr.pro_sotrudnikov.exeption_handling.handling.exeptions.OschibkaAvtorisaziiExeption;
+import di.aittr.pro_sotrudnikov.exeption_handling.handling.exeptions.OschibkaRegistraziiExeption;
 import di.aittr.pro_sotrudnikov.security.sec_dto.TokenResponseDto;
 import di.aittr.pro_sotrudnikov.servise.interfaces.SotrudnikServise;
 import io.jsonwebtoken.Claims;
@@ -32,7 +34,7 @@ public class AuthService {
         UserDetails foundUser = sotrudnikServise.loadUserByUsername(usernaim);
 
         if (!((Sotrudnik) foundUser).isActive()){
-            return null;
+            throw new OschibkaAvtorisaziiExeption("Ваша регистрация не подтверждена. Откройте свой Email");
         }
 
         if (passwordEncoder.matches(inboundUser.getPassword(), foundUser.getPassword())) {
@@ -42,7 +44,7 @@ public class AuthService {
             return new TokenResponseDto(accessToken, refreshToken);
 
         } else {
-            throw new AuthException("Password is incorrect");
+            throw new OschibkaAvtorisaziiExeption("Не корректный пароль");
         }
     }
 
@@ -57,7 +59,7 @@ public class AuthService {
             return new TokenResponseDto(accessToken);
 
         } else {
-            return new TokenResponseDto(null);
+            throw new OschibkaAvtorisaziiExeption("Предоставленый рефрештокен не валиден");
         }
     }
 

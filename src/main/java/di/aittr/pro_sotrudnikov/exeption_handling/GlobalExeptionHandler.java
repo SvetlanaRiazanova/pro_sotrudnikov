@@ -69,13 +69,19 @@ public class GlobalExeptionHandler {
     @ExceptionHandler(OschibkaOtpravkiSoobshcheniyaExeption.class)
     public ResponseEntity<Response> handlerExeption(OschibkaOtpravkiSoobshcheniyaExeption e) {
         Response response = new Response(e.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(RoleNeNaidenExeption.class)
     public ResponseEntity<Response> handlerExeption(RoleNeNaidenExeption e) {
         Response response = new Response(e.getMessage());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(OschibkaAvtorisaziiExeption.class)
+    public ResponseEntity<Response> handlerExeption(OschibkaAvtorisaziiExeption e) {
+        Response response = new Response(e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 }
 
