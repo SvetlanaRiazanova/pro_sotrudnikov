@@ -28,6 +28,9 @@ public class SotrudnikDto {
             example = "abc@mail.ru")
     private String email;
 
+    @Schema(description = "Файл с изображением")
+    private String image;
+
     public String getEmail() {
         return email;
     }

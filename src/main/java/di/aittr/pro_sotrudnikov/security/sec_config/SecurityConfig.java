@@ -72,6 +72,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/register").permitAll()
                         .requestMatchers(HttpMethod.GET, "/register/{code}").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login", "/auth/refresh").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/files").hasAnyRole(ADMIN_ROLE)
 
                         .requestMatchers(
                                 "/swagger-ui/**",

@@ -56,6 +56,10 @@ public class Sotrudnik implements UserDetails {
     )
     private List<Role> roles;
 
+    @Column(name = "image")
+    @NotNull(message = "Файл с изображением не должен быть пустым")
+    private String image;
+
     public Sotrudnik() {
     }
 
@@ -65,6 +69,14 @@ public class Sotrudnik implements UserDetails {
         this.username = username;
         this.password = password;
         this.roles = roles;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public boolean isActive() {
@@ -132,12 +144,12 @@ public class Sotrudnik implements UserDetails {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Sotrudnik sotrudnik = (Sotrudnik) o;
-        return active == sotrudnik.active && Objects.equals(id, sotrudnik.id) && Objects.equals(imya, sotrudnik.imya) && Objects.equals(username, sotrudnik.username) && Objects.equals(password, sotrudnik.password) && Objects.equals(email, sotrudnik.email) && Objects.equals(roles, sotrudnik.roles);
+        return active == sotrudnik.active && Objects.equals(id, sotrudnik.id) && Objects.equals(imya, sotrudnik.imya) && Objects.equals(username, sotrudnik.username) && Objects.equals(password, sotrudnik.password) && Objects.equals(email, sotrudnik.email) && Objects.equals(roles, sotrudnik.roles) && Objects.equals(image, sotrudnik.image);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, imya, username, password, email, active, roles);
+        return Objects.hash(id, imya, username, password, email, active, roles, image);
     }
 
     @Override
