@@ -33,14 +33,12 @@ public class FileServiceImpl implements FileService {
             String url = file.getAbsolutePath();
             sotrudnikServise.attachImage(url, sotrudnikImya);
 
-
             return url;
 
         } catch (Exception e) {
             throw new FileNeNaidenExeption();
         }
     }
-
 
     public String generateUniqueFileName(MultipartFile file){
         String originalImyaFile = file.getOriginalFilename();

@@ -33,14 +33,11 @@ public class Sotrudnik implements UserDetails {
     private String username;
 
     @Column(name = "password")
-    @Pattern(
-            regexp = "[A-Za-z0-9]{8,20}",
-            message = "Пароль сотрудника должен быть как минимум 9 и максимум 20 символов в длину")
     private String password;
 
     @Column(name = "email")
     @Pattern(
-            regexp = "^(.+)@(\\ S\\.+)$",
+            regexp = "^(.+)@(\\S+\\.\\S+)$",
             message = "email сотрудника должен быть без пробелов и содержать символ @")
     private String email;
 

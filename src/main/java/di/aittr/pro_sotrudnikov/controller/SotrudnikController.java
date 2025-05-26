@@ -107,7 +107,7 @@ public class SotrudnikController {
         servise.udalitPoImeni(imya);
 
     }
-    @GetMapping("/{imya}")
+    @GetMapping("/imya/{imya}")
     @Operation(
             summary = "прочитать одного сотрудника по имени",
             description = "процесс вывода одного сотрудника с его параметрами из базы данных по его имени")

@@ -31,6 +31,26 @@ public class SotrudnikDto {
     @Schema(description = "Файл с изображением")
     private String image;
 
+    public String getImage() {
+        return image;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        SotrudnikDto that = (SotrudnikDto) o;
+        return Objects.equals(id, that.id) && Objects.equals(imya, that.imya) && Objects.equals(username, that.username) && Objects.equals(password, that.password) && Objects.equals(email, that.email) && Objects.equals(image, that.image);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, imya, username, password, email, image);
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -69,18 +89,6 @@ public class SotrudnikDto {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        SotrudnikDto that = (SotrudnikDto) o;
-        return Objects.equals(id, that.id) && Objects.equals(imya, that.imya) && Objects.equals(username, that.username) && Objects.equals(password, that.password) && Objects.equals(email, that.email);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, imya, username, password, email);
     }
 
     @Override
