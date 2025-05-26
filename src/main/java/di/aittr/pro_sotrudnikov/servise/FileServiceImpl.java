@@ -19,15 +19,20 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public String upload(MultipartFile file, String sotrudnikImya) {
+    public String upload(MultipartFile vhFile, String sotrudnikImya) {
         try {
-            String uniqueName = generateUniqueFileName(file);
-            File file1 = new File("images/" + uniqueName);
-            file.transferTo(file1);
-            file1.createNewFile();
+            String uniqueName = generateUniqueFileName(vhFile);
+            String uploadDirName = "C:/images/";
+            File dir = new File(uploadDirName);
+            dir.mkdir();
 
-            String url = file1.getAbsolutePath();
+            File file = new File(uploadDirName + uniqueName);
+            file.createNewFile();
+            vhFile.transferTo(file);
+
+            String url = file.getAbsolutePath();
             sotrudnikServise.attachImage(url, sotrudnikImya);
+
 
             return url;
 
