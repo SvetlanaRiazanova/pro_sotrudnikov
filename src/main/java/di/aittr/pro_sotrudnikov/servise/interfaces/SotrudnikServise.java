@@ -25,4 +25,5 @@ public interface SotrudnikServise extends UserDetailsService {
     Sotrudnik procitatEntityPoId(Long sotrudnikId);
     void register(SotrudnikDto sotrudnik);
     void confirmation(String code);
+    void attachImage(String imageUrl, String sotrudnikImya);
 }

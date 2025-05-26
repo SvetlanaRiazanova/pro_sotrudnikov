@@ -174,4 +174,12 @@ public class SotrudnikServiceImpl implements SotrudnikServise {
         confirmationCode.getSotrudnik().setActive(true);
 
     }
+
+    @Transactional
+    @Override
+    public void attachImage(String imageUrl, String sotrudnikImya) {
+        procitatEntityPoImeni(sotrudnikImya).setImage(imageUrl);
+    }
+
+
 }

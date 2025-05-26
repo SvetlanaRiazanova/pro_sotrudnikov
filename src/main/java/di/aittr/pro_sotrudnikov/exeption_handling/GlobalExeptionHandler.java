@@ -83,6 +83,20 @@ public class GlobalExeptionHandler {
         Response response = new Response(e.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(FileNeNaidenExeption.class)
+    public ResponseEntity<Response> handlerExeption(FileNeNaidenExeption e) {
+        Response response = new Response(e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(FileValidacionExeption.class)
+    public ResponseEntity<Response> handlerExeption(FileValidacionExeption e) {
+        String[] partsResponse = e.getMessage().split("'");
+        Response response = new Response(partsResponse[1]);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+
+    }
 }
 
 
